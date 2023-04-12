@@ -1,0 +1,3 @@
+test/** linguist-vendored
+
+process_tabs.xml linguist-language=Ant-Build-System

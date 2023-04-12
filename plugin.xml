@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-model href="dita-ot/plugin.rnc" type="application/relax-ng-compact-syntax"?>
+<!--
+  This file is part of the DITA-OT Bootstrap Lunr Plug-in project.
+  See the accompanying LICENSE file for applicable licenses.
+-->
+<plugin id="dita-bootstrap.lunr" version="1.0.0">
+
+  <feature extension="ant.import" file="process_lunr.xml" />
+  <!-- Ensure the plugin's error and logging messages are available -->
+  <feature extension="dita.xsl.messages" file="resource/messages.xml" />
+  <!-- HTML5 extension points -->   
+  <feature extension="dita.xsl.html5" value="xsl/xhtml.xsl" type="file" />
+
+  <feature extension="depend.preprocess.post" value="lunr" />
+
+  <feature
+    extension="dita-bootstrap.headers.pre"
+    value="bootstrap.lunr.headers"
+  />
+  
+</plugin>
