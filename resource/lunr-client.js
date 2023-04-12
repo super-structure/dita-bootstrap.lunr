@@ -93,5 +93,6 @@ function search(el) {
   }
 
   elements[0].classList.add("collapse");
+  window.scrollTo(0,0);
   return false;
 }
