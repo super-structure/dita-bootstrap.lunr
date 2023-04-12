@@ -6,10 +6,7 @@
 -->
 <project name="dita-bootstrap.lunr" xmlns:if="ant:if" xmlns:unless="ant:unless">
 
-  <target name="lunr.init">
-    <condition property="is.lunr">
-      <equals arg1="${out.ext}" arg2=".html" />
-    </condition>
+  <target name="lunr.init" if="lunr.search">
     <property
       name="lunr.node.script"
       value="${dita.plugin.dita-bootstrap.lunr.dir}/resource/node-lunr.js"
@@ -41,7 +38,7 @@
   </target>
 
 
-  <target name="lunr.copy" if="is.lunr" description="Copy lunr files">
+  <target name="lunr.copy.files" if="lunr.search" description="Copy lunr files">
     <!-- -->
     <copy
       file="${dita.plugin.dita-bootstrap.lunr.dir}/resource/lunr-client.js"
@@ -70,13 +67,20 @@
       token="@@@lunr.index.preview@@@"
       value="${lunr.preview.output}"
     />
+    <replace
+      file="${dita.output.dir}/js/lunr-client.js"
+      token="@@@lunr.search@@@"
+      value="${lunr.search}/"
+    />
+
+    
     <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755"/>
   </target>
 
   <!--
     Check if Node is installed.
   -->
-  <target name="lunr.node.check" if="is.lunr">
+  <target name="lunr.node.check" if="lunr.search">
     <!-- For Unix run node as an executable -->
 
     <exec
@@ -113,15 +117,7 @@
     <dita-ot-fail unless:set="node.installed" id="LUNR001F" />
   </target>
 
-  <target name="bootstrap.lunr.headers">
-    <!-- Location of page header template with hard-coded links -->
-    <property
-      name="args.hdr"
-      location="${dita.plugin.dita-bootstrap.lunr.dir}/includes/bs-navbar-default.hdr.xml"
-    />
-  </target>
-
-  <target name="add.lunr" if="is.lunr">
+  <target name="lunr.generate.files" if="lunr.search">
       <property name="lunr.json" value="${dita.temp.dir}/lunr.json" />
      
       <property name="lunr.temp.dir" value="${dita.temp.dir}/lunr" />
@@ -204,6 +200,6 @@
 
   <target
     name="lunr"
-    depends="lunr.init, lunr.node.check, add.lunr, lunr.copy"
+    depends="lunr.init, lunr.node.check, lunr.generate.files, lunr.copy.files"
   />
 </project>

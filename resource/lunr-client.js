@@ -1,5 +1,6 @@
 const LUNR_DATA = @@@lunr.index.output@@@;
 const PREVIEW_LOOKUP = @@@lunr.index.preview@@@;
+const BASE_URL = '@@@lunr.search@@@';
 
 // Parse search results into HTML
 function parseLunrResults(results) {
@@ -12,6 +13,7 @@ function parseLunrResults(results) {
     const link = item["l"];
     const result =
       '<p><span class="h3"><a href="' +
+      BASE_URL + 
       link +
       '">' +
       title +

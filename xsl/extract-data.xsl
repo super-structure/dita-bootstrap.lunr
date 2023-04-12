@@ -25,7 +25,7 @@
   </xsl:param>
 
   <xsl:variable name="RELATIVE_PATH">
-    <xsl:value-of select="$PATH2PROJ" />
+    <!--xsl:value-of select="$PATH2PROJ" -->
     <xsl:value-of select="concat($FILEDIR, '/')" />
     <xsl:call-template name="replace-extension">
       <xsl:with-param name="filename" select="$FILENAME" />
