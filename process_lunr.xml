@@ -70,6 +70,7 @@
       token="@@@lunr.index.preview@@@"
       value="${lunr.preview.output}"
     />
+    <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755"/>
   </target>
 
   <!--
