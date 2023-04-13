@@ -1,6 +1,6 @@
 # DITA-OT Bootstrap Lunr Search Box
 
-This is a [DITA-OT Plug-in](https://www.dita-ot.org/plugins) adding a Lunr search function to the Bootstrap HTML.
+This is [DITA-OT Plug-in](https://www.dita-ot.org/plugins) is an extension to the [DITA Bootstrap](https://infotexture.github.io/dita-bootstrap/) Plug-in adding a [Lunr.js](https://lunrjs.com/) search function to the Bootstrap HTML.
 
 <!-- MarkdownTOC levels="2,3" -->
 
