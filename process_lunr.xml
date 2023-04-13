@@ -4,24 +4,21 @@
   This file is part of the DITA-OT Bootstrap Lunr Plug-in project.
   See the accompanying LICENSE file for applicable licenses.
 -->
-<project name="dita-bootstrap.lunr" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project name="dita.plugin.net.infotexture.dita-bootstrap.lunr" xmlns:if="ant:if" xmlns:unless="ant:unless">
 
   <target name="lunr.init" if="lunr.search">
     <property
       name="lunr.node.script"
-      value="${dita.plugin.dita-bootstrap.lunr.dir}/resource/node-lunr.js"
+      value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/node-lunr.js"
     />
     <property
       name="lunr.search.template"
-      value="${dita.plugin.dita-bootstrap.lunr.dir}/resource/search.dita"
+      value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/search.dita"
     />
     <property
       name="lunr.lib"
-      value="${dita.plugin.dita-bootstrap.lunr.dir}/resource/lunr.js"
+      value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr.js"
     />
-    <!--property name="lunr.index" value="${dita.output.dir}/js/lunr-index.json"/>
-    <property name="lunr.preview"  value="${dita.output.dir}/js/lunr-preview.json"/-->
-
     <tempfile
       property="lunr.index"
       deleteonexit="true"
@@ -39,9 +36,8 @@
 
 
   <target name="lunr.copy.files" if="lunr.search" description="Copy lunr files">
-    <!-- -->
     <copy
-      file="${dita.plugin.dita-bootstrap.lunr.dir}/resource/lunr-client.js"
+      file="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr-client.js"
       toFile="${dita.output.dir}/js/lunr-client.js"
       overwrite="true"
     />
@@ -128,7 +124,7 @@
       <xslt
         destdir="${lunr.temp.dir}"
         extension="xml"
-        style="${dita.plugin.dita-bootstrap.lunr.dir}/xsl/extract-data.xsl"
+        style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/extract-data.xsl"
         filenameparameter="FILENAME"
         filedirparameter="FILEDIR"
         parallel="${parallel}"
@@ -150,9 +146,9 @@
       <xslt
       taskname="merge-lunr"
       force="true"
-      in="${dita.plugin.dita-bootstrap.lunr.dir}/xsl/extract-data.xsl"
+      in="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/extract-data.xsl"
       out="${lunr.data.file}"
-      style="${dita.plugin.dita-bootstrap.lunr.dir}/xsl/merge-data.xsl"
+      style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/merge-data.xsl"
     >
         <xmlcatalog refid="dita.catalog" />
         <param expression="${lunr.temp.dir}/" name="in" />
@@ -164,14 +160,14 @@
       taskname="generate-lunr-to-json"
       in="${lunr.data.file}"
       out="${lunr.json}"
-      style="${dita.plugin.dita-bootstrap.lunr.dir}/xsl/data-to-json.xsl"
+      style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/data-to-json.xsl"
     />
 
       <xslt
       taskname="generate-preview-json"
       in="${lunr.data.file}"
       out="${lunr.preview}"
-      style="${dita.plugin.dita-bootstrap.lunr.dir}/xsl/data-to-preview.xsl"
+      style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/data-to-preview.xsl"
     />
 
     <property name="lunr.json.file" location="${lunr.json}" />

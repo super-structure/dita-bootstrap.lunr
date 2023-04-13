@@ -1,16 +1,8 @@
-# dita-bootstrap.lunr
-
-Lunr Search from DITA with a Bootstrap look-and-feel
-
-[![license](https://img.shields.io/github/license/jason-fox/fox.jason.open-graph.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![DITA-OT 4.0](https://img.shields.io/badge/DITA--OT-4.0-blue.svg)](http://www.dita-ot.org/4.0)
+# DITA-OT Bootstrap Lunr Search Box
 
 This is a [DITA-OT Plug-in](https://www.dita-ot.org/plugins) adding a Lunr search function to the Bootstrap HTML.
 
-![](https://jason-fox.github.io/fox.jason.open-graph/open-graph.png)
-
-<details>
-<summary><strong>Table of Contents</strong></summary>
+<!-- MarkdownTOC levels="2,3" -->
 
 -   [Install](#install)
     -   [Installing DITA-OT](#installing-dita-ot)
@@ -18,18 +10,18 @@ This is a [DITA-OT Plug-in](https://www.dita-ot.org/plugins) adding a Lunr searc
 -   [Usage](#usage)
 -   [License](#license)
 
-</details>
+<!-- /MarkdownTOC -->
 
 ## Install
 
-The DITA-OT Lunr Search Plug-in  has been tested against [DITA-OT 4.x](http://www.dita-ot.org/download). It is recommended
+The DITA-OT Bootstrap Lunr Plug-in  has been tested against [DITA-OT 4.x](http://www.dita-ot.org/download). It is recommended
 that you upgrade to the latest version.
 
 ### Installing DITA-OT
 
 <a href="https://www.dita-ot.org"><img src="https://www.dita-ot.org/images/dita-ot-logo.svg" align="right" height="55"></a>
 
-The DITA-OT Lunr Search Plug-in  is a plugin for the DITA Open Toolkit.
+The DITA-OT Bootstrap Lunr Search Plug-in is a plugin for the DITA Open Toolkit.
 
 -   Full installation instructions for downloading DITA-OT can be found
     [here](https://www.dita-ot.org/4.0/topics/installing-client.html).
@@ -52,10 +44,29 @@ rm dita-ot-4.0.zip
 -   Run the plug-in installation commands:
 
 ```console
-dita install https://github.com/jason-fox/dita-bootstrap.lunr/archive/master.zip
+dita install https://github.com/jason-fox/fox.jason.extend.css/archive/master.zip
+dita install https://github.com/infotexture/dita-bootstrap/archive/master.zip
+dita install https://github.com/infotexture/dita-bootstrap.lunr/archive/master.zip
 ```
 
-The `dita` command line tool requires no additional configuration.
+
+### Installing Node.js
+
+<a href="https://nodejs.org/"><img src="https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg" align="right" width="70" height="70" align="right" width="55" height="55"></a>
+
+Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. The DITA-OT
+Bootstrap Lunr Search plugin uses [Node.js](https://nodejs.org/) to generate the Lunr.js search
+index. Node.js must therefore be present on a user's machine for the index to be generated
+successfully.
+
+To download a copy follow the instructions on the [Install Page](https://nodejs.org/en/download/).
+
+```console
+apt-get update -q
+export DEBIAN_FRONTEND=noninteractive
+apt-get install -qy --no-install-recommends nodejs
+nodejs -v
+```
 
 ---
 
@@ -64,7 +75,7 @@ The `dita` command line tool requires no additional configuration.
 
 #### Adding Lunr Search to HTML Bootstrap output
 
-To run, use any `html5-bootstrap` transform and add the `lunr.search` parameter.
+To run, use the `html5-bootstrap` transform and add the `lunr.search` parameter.
 
 ```console
 PATH_TO_DITA_OT/bin/dita -f html5-bootstrap -o out -i PATH_TO_DITAMAP \
@@ -81,3 +92,7 @@ A sample header file `bs-navbar-lunr.hdr.xml` including a search box can be foun
 ## License
 
 [Apache 2.0](LICENSE) © 2022 Jason Fox
+
+The Program includes the following additional software components which were obtained under license:
+
+-  lunr.js - https://github.com/olivernn/lunr.js - **MIT license**
