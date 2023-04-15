@@ -14,7 +14,7 @@ This is [DITA-OT Plug-in](https://www.dita-ot.org/plugins) is an extension to th
 
 ## Install
 
-The DITA-OT Bootstrap Lunr Plug-in  has been tested against [DITA-OT 4.x](http://www.dita-ot.org/download). It is recommended
+The DITA Bootstrap Lunr.js Plug-in  has been tested against [DITA-OT 4.x](http://www.dita-ot.org/download). It is recommended
 that you upgrade to the latest version.
 
 ### Installing DITA-OT
@@ -96,3 +96,4 @@ A sample header file `bs-navbar-lunr.hdr.xml` including a search box can be foun
 The Program includes the following additional software components which were obtained under license:
 
 -  lunr.js - https://github.com/olivernn/lunr.js - **MIT license**
+-  lunr-languages - https://github.com/MihaiValentin/lunr-languages  - **Mozilla Public license**

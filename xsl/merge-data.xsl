@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!--
-	This file is part of the DITA-OT Bootstrap Lunr Plug-in project.
+	This file is part of the DITA Bootstrap Lunr.js Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 -->
 <xsl:stylesheet

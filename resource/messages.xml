@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  This file is part of the DITA-OT Bootstrap Lunr Plug-in project.
+  This file is part of the DITA Bootstrap Lunr.js Plug-in project.
   See the accompanying LICENSE file for applicable licenses.
 -->
 <messages xmlns:dita="http://dita-ot.sourceforge.net">
-  <message id="LUNR001F" type="FAILURE">
+  <message id="LUNR001F" type="FATAL">
     <reason>Node has not been installed.</reason>
     <response>Please install Node.js to use this plugin</response>
+  </message>
+  <message id="LUNR002F" type="FATAL">
+    <reason>Lunr.js failed to generate search index.</reason>
+    <response>Check that your language is supported.</response>
   </message>
 </messages>

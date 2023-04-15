@@ -1,80 +1,138 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--ant-->
 <!--
-  This file is part of the DITA-OT Bootstrap Lunr Plug-in project.
+  This file is part of the DITA Bootstrap Lunr.js Plug-in project.
   See the accompanying LICENSE file for applicable licenses.
 -->
-<project name="dita.plugin.net.infotexture.dita-bootstrap.lunr" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project
+  name="dita.plugin.net.infotexture.dita-bootstrap.lunr"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+>
 
+  <!--
+    Setting up Lunr processing. Sets up ANT variables
+  -->
   <target name="lunr.init" if="lunr.search">
-    <property
-      name="lunr.node.script"
-      value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/node-lunr.js"
-    />
-    <property
-      name="lunr.search.template"
-      value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/search.dita"
-    />
+
     <property
       name="lunr.lib"
       value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr.js"
     />
+
+    <condition property="lunr.support.include">
+      <matches
+        string="${default.language}"
+        pattern="((ar|da|de|es|fi|fr|hi|hu|it|ja|jp|ko|nl|no|pt|ro|ru|sv|ta|th|tr|vi|zh)(\-|$))"
+      />
+    </condition>
+
     <tempfile
-      property="lunr.index"
+      property="lunr.node.script.file"
       deleteonexit="true"
       destdir="${dita.temp.dir}"
       createfile="true"
     />
-    <tempfile
-      property="lunr.preview"
-      deleteonexit="true"
-      destdir="${dita.temp.dir}"
-      createfile="true"
+    <copy
+      file="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/node-lunr-base.js"
+      toFile="${lunr.node.script.file}"
+      overwrite="true"
+    />
+    <property name="lunr.node.script" location="${lunr.node.script.file}" />
+
+
+  </target>
+
+  <!--
+    Overrides the default English language lunr.js index creation.
+  -->
+  <target name="lunr.lang.support" if="lunr.support.include">
+    <property
+      name="lunr.stemmer.js"
+      location="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/languages/lunr.stemmer.support.js"
+    />
+    <loadresource property="lunr.lang">
+      <string value="${default.language}" />
+      <filterchain>
+        <tokenfilter>
+          <replaceregex pattern="(\w\w)-(\w\w)" replace="\1" />
+        </tokenfilter>
+      </filterchain>
+    </loadresource>
+    <property
+      name="lunr.lang.js"
+      location="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/languages/lunr.${lunr.lang}.js"
+    />
+
+    <copy
+      file="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/node-lunr-lang.js"
+      toFile="${lunr.node.script.file}"
+      overwrite="true"
+    />
+
+     <replace
+      file="${lunr.node.script.file}"
+      token="@@@lunr.lang.js@@@"
+      value="${lunr.lang.js}"
+    />
+     <replace
+      file="${lunr.node.script.file}"
+      token="@@@lunr.stemmer.js@@@"
+      value="${lunr.stemmer.js}"
+    />
+     <replace
+      file="${lunr.node.script.file}"
+      token="@@@lunr.lang@@@"
+      value="${lunr.lang}"
     />
 
   </target>
 
-
-  <target name="lunr.copy.files" if="lunr.search" description="Copy lunr files">
+  <!--
+    Copies the Lunr-client.js file to the final destination
+  -->
+  <target
+    name="lunr.copy.file"
+    if="lunr.search"
+    description="Copy lunr-client file"
+  >
     <copy
       file="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr-client.js"
       toFile="${dita.output.dir}/js/lunr-client.js"
       overwrite="true"
     />
 
-    <loadfile
-      failonerror="true"
-      property="lunr.index.output"
-      srcfile="${lunr.index}"
-    />
-    <loadfile
-      failonerror="true"
-      property="lunr.preview.output"
-      srcfile="${lunr.preview}"
-    />
-
     <replace
       file="${dita.output.dir}/js/lunr-client.js"
-      token="@@@lunr.index.output@@@"
-      value="${lunr.index.output}"
+      token="@@@lunr.index@@@"
+      value="${lunr.index}"
     />
     <replace
       file="${dita.output.dir}/js/lunr-client.js"
-      token="@@@lunr.index.preview@@@"
-      value="${lunr.preview.output}"
+      token="@@@lunr.preview@@@"
+      value="${lunr.preview}"
     />
     <replace
       file="${dita.output.dir}/js/lunr-client.js"
       token="@@@lunr.search@@@"
       value="${lunr.search}/"
     />
+    <replace
+      file="${dita.output.dir}/js/lunr-client.js"
+      token="@@@lunr.search.results@@@"
+      value="${lunr.search.results}"
+    />
+    <replace
+      file="${dita.output.dir}/js/lunr-client.js"
+      token="@@@lunr.no.search.results@@@"
+      value="${lunr.no.search.results}"
+    />
 
-    
-    <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755"/>
+    <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755" />
   </target>
 
   <!--
-    Check if Node is installed.
+    Check if Node.js is installed.
   -->
   <target name="lunr.node.check" if="lunr.search">
     <!-- For Unix run node as an executable -->
@@ -113,14 +171,98 @@
     <dita-ot-fail unless:set="node.installed" id="LUNR001F" />
   </target>
 
-  <target name="lunr.generate.files" if="lunr.search">
-      <property name="lunr.json" value="${dita.temp.dir}/lunr.json" />
-     
+  <!--
+    Creates placeholder texts for Search Results
+  -->
+  <target name="lunr.placeholders" if="lunr.search">
+    <tempfile
+      property="lunr.search.results.file"
+      deleteonexit="true"
+      destdir="${dita.temp.dir}"
+      createfile="true"
+    />
+    <tempfile
+      property="lunr.no.search.results.file"
+      deleteonexit="true"
+      destdir="${dita.temp.dir}"
+      createfile="true"
+    />
+
+    <pipeline taskname="placeholder-search-result">
+      <xslt
+        classpathref="dost.class.path"
+        style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/placeholder-text.xsl"
+        in="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/dummy.xml"
+        out="${lunr.search.results.file}"
+      >
+        <param name="text" expression="Search Results" />
+        <param
+          name="defaultLanguage"
+          expression="${default.language}"
+          if:set="default.language"
+        />
+      </xslt>
+    </pipeline>
+
+    <pipeline taskname="placeholder-no-search-result">
+      <xslt
+        classpathref="dost.class.path"
+        style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/placeholder-text.xsl"
+        in="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/dummy.xml"
+        out="${lunr.no.search.results.file}"
+      >
+        <param name="text" expression="No Search Results" />
+        <param
+          name="defaultLanguage"
+          expression="${default.language}"
+          if:set="default.language"
+        />
+      </xslt>
+    </pipeline>
+
+    <loadfile
+      failonerror="true"
+      property="lunr.search.results"
+      srcfile="${lunr.search.results.file}"
+    />
+    <loadfile
+      failonerror="true"
+      property="lunr.no.search.results"
+      srcfile="${lunr.no.search.results.file}"
+    />
+  </target>
+
+  <!--
+    Generates Lunr search index and preview JSON
+  -->
+  <target name="lunr.search.index" if="lunr.search" depends="lunr.lang.support">
+      <property name="lunr.raw.json" value="${dita.temp.dir}/lunr.json" />
       <property name="lunr.temp.dir" value="${dita.temp.dir}/lunr" />
       <mkdir dir="${lunr.temp.dir}" />
 
+      <tempfile
+      deleteonexit="true"
+      destdir="${dita.temp.dir}/lunr"
+      property="lunr.raw.xml"
+    />
+      <tempfile
+      property="lunr.index.json"
+      deleteonexit="true"
+      destdir="${dita.temp.dir}"
+      createfile="true"
+    />
+      <tempfile
+      property="lunr.preview.json"
+      deleteonexit="true"
+      destdir="${dita.temp.dir}"
+      createfile="true"
+    />
 
-      <pipeline message="Convert DITA topic to search strings" taskname="xslt">
+
+      <pipeline
+      message="Convert DITA topics to search strings"
+      taskname="extract-texts"
+    >
       <xslt
         destdir="${lunr.temp.dir}"
         extension="xml"
@@ -137,17 +279,11 @@
       </xslt>
       </pipeline>
 
-
-      <tempfile
-      deleteonexit="true"
-      destdir="${dita.temp.dir}/lunr"
-      property="lunr.data.file"
-    />
       <xslt
-      taskname="merge-lunr"
+      taskname="merge-texts"
       force="true"
-      in="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/extract-data.xsl"
-      out="${lunr.data.file}"
+      in="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/dummy.xml"
+      out="${lunr.raw.xml}"
       style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/merge-data.xsl"
     >
         <xmlcatalog refid="dita.catalog" />
@@ -157,36 +293,79 @@
       </xslt>
 
       <xslt
-      taskname="generate-lunr-to-json"
-      in="${lunr.data.file}"
-      out="${lunr.json}"
+      taskname="gen-raw-json"
+      in="${lunr.raw.xml}"
+      out="${lunr.raw.json}"
       style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/data-to-json.xsl"
     />
 
       <xslt
-      taskname="generate-preview-json"
-      in="${lunr.data.file}"
-      out="${lunr.preview}"
+      taskname="gen-preview-json"
+      in="${lunr.raw.xml}"
+      out="${lunr.preview.json}"
       style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/data-to-preview.xsl"
     />
 
-    <property name="lunr.json.file" location="${lunr.json}" />
-    <property name="lunr.index.file" location="${lunr.index}" />
+    <property name="lunr.raw.json.file" location="${lunr.raw.json}" />
+    <property name="lunr.index.json.file" location="${lunr.index.json}" />
     <!-- For Unix run node as an executable -->
-    <exec executable="node" dir="${dita.dir}" osfamily="unix" taskname="node">
+    <exec
+      executable="node"
+      dir="${dita.dir}"
+      osfamily="unix"
+      taskname="gen-index-json"
+      resultproperty="lunr.node.result"
+      errorproperty="lunr.node.error"
+    >
 
       <arg line="${lunr.node.script}" />
       <arg line="${lunr.lib}" />
-      <arg line="${lunr.json.file}" />
-      <arg line="${lunr.index.file}" />
+      <arg line="${lunr.raw.json.file}" />
+      <arg line="${lunr.index.json.file}" />
     </exec>
     <!-- For Windows run from a DOS command -->
-    <exec executable="cmd" dir="${dita.dir}" osfamily="windows" taskname="node">
+    <exec
+      executable="cmd"
+      dir="${dita.dir}"
+      osfamily="windows"
+      taskname="gen-index-json"
+      resultproperty="lunr.node.result"
+      errorproperty="lunr.node.error"
+    >
       <arg value="/C" />
       <arg
-        value="node  &quot;${lunr.node.script}&quot; &quot;${lunr.lib}&quot; &quot;${lunr.json.file}&quot; &quot;${lunr.index.file}&quot;"
+        value="node  &quot;${lunr.node.script}&quot; &quot;${lunr.lib}&quot; &quot;${lunr.raw.json.file}&quot; &quot;${lunr.index.json.file}&quot;"
       />
     </exec>
+
+    <condition property="lunr.isError">
+        <not>
+            <equals arg1="${lunr.node.result}" arg2="0" />
+        </not>
+    </condition>
+
+    <echo
+      taskname="gen-index-json"
+      if:set="lunr.isError"
+      level="error"
+      message="${lunr.node.error}"
+    />
+    <fail
+      if:set="lunr.isError"
+      id="LUNR002F"
+      message="Lunr.js failed to generate search index"
+    />
+
+    <loadfile
+      failonerror="true"
+      property="lunr.index"
+      srcfile="${lunr.index.json}"
+    />
+    <loadfile
+      failonerror="true"
+      property="lunr.preview"
+      srcfile="${lunr.preview.json}"
+    />
 
     <!-- Clean up temporary files -->
     <delete failonerror="false" includeemptydirs="true">
@@ -196,6 +375,6 @@
 
   <target
     name="lunr"
-    depends="lunr.init, lunr.node.check, lunr.generate.files, lunr.copy.files"
+    depends="lunr.init, lunr.node.check, lunr.placeholders, lunr.search.index, lunr.copy.file"
   />
 </project>
