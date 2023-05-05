@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xml-model href="dita-ot/plugin.rnc" type="application/relax-ng-compact-syntax"?>
 <!--
-  This file is part of the DITA Bootstrap Lunr.js Plug-in project.
+  This file is part of the DITA Bootstrap Lunr Search project.
   See the accompanying LICENSE file for applicable licenses.
 -->
 <plugin id="net.infotexture.dita-bootstrap.lunr" version="1.0.0">
