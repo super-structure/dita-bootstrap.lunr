@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xml-model href="dita-ot/plugin.rnc" type="application/relax-ng-compact-syntax"?>
 <!--
-  This file is part of the DITA Bootstrap Lunr Search project.
+  This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
   See the accompanying LICENSE file for applicable licenses.
 -->
 <plugin id="net.infotexture.dita-bootstrap.lunr" version="1.0.0">
@@ -13,9 +13,11 @@
   <feature extension="dita.xsl.html5" value="xsl/xhtml.xsl" type="file" />
 
   <feature extension="depend.preprocess.post" value="lunr" />
+  <!-- Internationalization of texts -->
+  <feature extension="dita.xsl.strings" file="cfg/common/vars/strings.xml" />
 
   <transtype extends="html5-bootstrap" desc="HTML5 with Bootstrap style">
-    <param name="lunr.search" desc="Website URL for Lunr" type="string"/>
+    <param name="lunr.search" desc="Website URL for Lunr" type="string" />
   </transtype>
   
 </plugin>

@@ -1,5 +1,5 @@
-const LUNR_DATA = @@@lunr.index.output@@@;
-const PREVIEW_LOOKUP = @@@lunr.index.preview@@@;
+const LUNR_DATA = @@@lunr.index@@@;
+const PREVIEW_LOOKUP = @@@lunr.preview@@@;
 const BASE_URL = '@@@lunr.search@@@';
 
 // Parse search results into HTML
@@ -24,14 +24,14 @@ function parseLunrResults(results) {
   if (html.length) {
     return html.join("");
   } else {
-    return "<p>Your search returned no results.</p>";
+    return "<p>@@@lunr.no.search.results@@@</p>";
   }
 }
 
 function formatResults(results) {
   return `<article role="article">
 		<div class="modal-header">
-	        <h1>Search Results</h1>
+	        <h1>@@@lunr.search.results@@@</h1>
 	        <button type="button" class="btn-close" aria-label="Close" onclick="closeSearch(this);"></button>
 	    </div>
 	    <div class="modal-body">
@@ -47,26 +47,6 @@ function escapeHtml(unsafe) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
-}
-
-function showResultCount(query, total, domElementId) {
-  if (total == 0) {
-    return;
-  }
-
-  var s = "";
-  if (total > 1) {
-    s = "s";
-  }
-  var found = "<p>Found " + total + " result" + s;
-  if (query != "" && query != null) {
-    query = escapeHtml(query);
-    var forQuery = ' for <span class="result-query">' + query + "</span>";
-  } else {
-    var forQuery = "";
-  }
-  var element = document.getElementById(domElementId);
-  element.innerHTML = found + forQuery + "</p>";
 }
 
 function closeSearch(el) {

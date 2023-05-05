@@ -74,3 +74,4 @@ A sample header file with a search box is provided with the plug-in: [includes/b
 The Program includes the following additional software components which were obtained under license:
 
 - lunr.js - https://github.com/olivernn/lunr.js - **MIT license**
+- lunr-languages - https://github.com/MihaiValentin/lunr-languages - **Mozilla Public license**
