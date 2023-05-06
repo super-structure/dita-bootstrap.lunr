@@ -53,19 +53,14 @@ To download and install a copy, follow the instructions for your operating syste
 
 #### Adding Lunr Search to HTML Bootstrap output
 
-To run, use the `html5-bootstrap` transformation and add the `lunr.search` parameter.
+To run, use the `html5-bootstrap` transformation and add the `args.hdr` parameter.
 
 ```console
 PATH_TO_DITA_OT/bin/dita -f html5-bootstrap -o out -i PATH_TO_DITAMAP \
-  --lunr.search=WEBSITE_URL \
   --args.hdr=path/to/your-header.xml
 ```
 
 A sample header file with a search box is provided with the plug-in: [includes/bs-navbar-lunr.hdr.xml](./includes/bs-navbar-lunr.hdr.xml).
-
-### Parameter Reference
-
-- `lunr.search` - Website URL to search
 
 ## License
 

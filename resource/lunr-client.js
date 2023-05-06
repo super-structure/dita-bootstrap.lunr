@@ -1,6 +1,16 @@
-const LUNR_DATA = @@@lunr.index@@@;
-const PREVIEW_LOOKUP = @@@lunr.preview@@@;
-const BASE_URL = '@@@lunr.search@@@';
+let LUNR_DATA = null;
+let PREVIEW_LOOKUP = null;
+const BASE_URL = window.location.origin + "/";
+
+function jsonFetch(url) {
+  return new Promise(function (resolve, reject) {
+    fetch(BASE_URL + url)
+      .then((response) => response.json())
+      .then((result) => {
+        resolve(result);
+      });
+  });
+}
 
 // Parse search results into HTML
 function parseLunrResults(results) {
@@ -13,7 +23,7 @@ function parseLunrResults(results) {
     const link = item["l"];
     const result =
       '<p><span class="h3"><a href="' +
-      BASE_URL + 
+      BASE_URL +
       link +
       '">' +
       title +
@@ -56,7 +66,15 @@ function closeSearch(el) {
   return false;
 }
 
-function search(el) {
+async function search(el) {
+  if (!LUNR_DATA) {
+    LUNR_DATA = await jsonFetch("js/search_index.json");
+  }
+
+  if (!PREVIEW_LOOKUP) {
+    PREVIEW_LOOKUP = await jsonFetch("js/preview.json");
+  }
+
   const query = document.getElementById("search-input").value;
   const idx = lunr.Index.load(LUNR_DATA);
   // Write results to page
@@ -73,6 +91,6 @@ function search(el) {
   }
 
   elements[0].classList.add("collapse");
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
   return false;
 }

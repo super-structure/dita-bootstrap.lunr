@@ -13,7 +13,7 @@
   <!--
     Setting up Lunr processing. Sets up ANT variables
   -->
-  <target name="lunr.init" if="lunr.search">
+  <target name="lunr.init">
 
     <property
       name="lunr.lib"
@@ -91,32 +91,13 @@
   <!--
     Copies the Lunr-client.js file to the final destination
   -->
-  <target
-    name="lunr.copy.file"
-    if="lunr.search"
-    description="Copy lunr-client file"
-  >
+  <target name="lunr.copy.file" description="Copy lunr-client file">
     <copy
       file="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr-client.js"
       toFile="${dita.output.dir}/js/lunr-client.js"
       overwrite="true"
     />
 
-    <replace
-      file="${dita.output.dir}/js/lunr-client.js"
-      token="@@@lunr.index@@@"
-      value="${lunr.index}"
-    />
-    <replace
-      file="${dita.output.dir}/js/lunr-client.js"
-      token="@@@lunr.preview@@@"
-      value="${lunr.preview}"
-    />
-    <replace
-      file="${dita.output.dir}/js/lunr-client.js"
-      token="@@@lunr.search@@@"
-      value="${lunr.search}/"
-    />
     <replace
       file="${dita.output.dir}/js/lunr-client.js"
       token="@@@lunr.search.results@@@"
@@ -128,13 +109,26 @@
       value="${lunr.no.search.results}"
     />
 
+    <move
+      file="${lunr.index.json}"
+      toFile="${dita.output.dir}/js/search_index.json"
+      overwrite="true"
+    />
+    <move
+      file="${lunr.preview.json}"
+      toFile="${dita.output.dir}/js/preview.json"
+      overwrite="true"
+    />
+
     <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755" />
+    <chmod file="${dita.output.dir}/js/search_index.json" perm="755" />
+    <chmod file="${dita.output.dir}/js/preview.json" perm="755" />
   </target>
 
   <!--
     Check if Node.js is installed.
   -->
-  <target name="lunr.node.check" if="lunr.search">
+  <target name="lunr.node.check">
     <!-- For Unix run node as an executable -->
 
     <exec
@@ -174,7 +168,7 @@
   <!--
     Creates placeholder texts for Search Results
   -->
-  <target name="lunr.placeholders" if="lunr.search">
+  <target name="lunr.placeholders">
     <tempfile
       property="lunr.search.results.file"
       deleteonexit="true"
@@ -235,7 +229,7 @@
   <!--
     Generates Lunr search index and preview JSON
   -->
-  <target name="lunr.search.index" if="lunr.search" depends="lunr.lang.support">
+  <target name="lunr.search.index" depends="lunr.lang.support">
       <property name="lunr.raw.json" value="${dita.temp.dir}/lunr.json" />
       <property name="lunr.temp.dir" value="${dita.temp.dir}/lunr" />
       <mkdir dir="${lunr.temp.dir}" />
@@ -355,18 +349,6 @@
       id="LUNR002F"
       message="Lunr.js failed to generate search index"
     />
-
-    <loadfile
-      failonerror="true"
-      property="lunr.index"
-      srcfile="${lunr.index.json}"
-    />
-    <loadfile
-      failonerror="true"
-      property="lunr.preview"
-      srcfile="${lunr.preview.json}"
-    />
-
     <!-- Clean up temporary files -->
     <delete failonerror="false" includeemptydirs="true">
       <fileset dir="${lunr.temp.dir}" includes="**/*" />

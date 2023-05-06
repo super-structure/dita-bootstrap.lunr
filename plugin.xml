@@ -15,9 +15,5 @@
   <feature extension="depend.preprocess.post" value="lunr" />
   <!-- Internationalization of texts -->
   <feature extension="dita.xsl.strings" file="cfg/common/vars/strings.xml" />
-
-  <transtype extends="html5-bootstrap" desc="HTML5 with Bootstrap style">
-    <param name="lunr.search" desc="Website URL for Lunr" type="string" />
-  </transtype>
   
 </plugin>
