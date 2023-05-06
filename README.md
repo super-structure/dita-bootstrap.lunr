@@ -62,7 +62,6 @@ PATH_TO_DITA_OT/bin/dita -f html5-bootstrap -o out -i PATH_TO_DITAMAP \
 
 A sample header file with a search box is provided with the plug-in: [includes/bs-navbar-lunr.hdr.xml](./includes/bs-navbar-lunr.hdr.xml).
 
-
 ## License
 
 [Apache 2.0](LICENSE) © 2023 Jason Fox

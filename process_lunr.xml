@@ -91,26 +91,13 @@
   <!--
     Copies the Lunr-client.js file to the final destination
   -->
-  <target
-    name="lunr.copy.file"
-    description="Copy lunr-client file"
-  >
+  <target name="lunr.copy.file" description="Copy lunr-client file">
     <copy
       file="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr-client.js"
       toFile="${dita.output.dir}/js/lunr-client.js"
       overwrite="true"
     />
 
-    <replace
-      file="${dita.output.dir}/js/lunr-client.js"
-      token="@@@lunr.index@@@"
-      value="${lunr.index}"
-    />
-    <replace
-      file="${dita.output.dir}/js/lunr-client.js"
-      token="@@@lunr.preview@@@"
-      value="${lunr.preview}"
-    />
     <replace
       file="${dita.output.dir}/js/lunr-client.js"
       token="@@@lunr.search.results@@@"
@@ -122,7 +109,20 @@
       value="${lunr.no.search.results}"
     />
 
+    <move
+      file="${lunr.index.json}"
+      toFile="${dita.output.dir}/js/search_index.json"
+      overwrite="true"
+    />
+    <move
+      file="${lunr.preview.json}"
+      toFile="${dita.output.dir}/js/preview.json"
+      overwrite="true"
+    />
+
     <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755" />
+    <chmod file="${dita.output.dir}/js/search_index.json" perm="755" />
+    <chmod file="${dita.output.dir}/js/preview.json" perm="755" />
   </target>
 
   <!--
@@ -349,18 +349,6 @@
       id="LUNR002F"
       message="Lunr.js failed to generate search index"
     />
-
-    <loadfile
-      failonerror="true"
-      property="lunr.index"
-      srcfile="${lunr.index.json}"
-    />
-    <loadfile
-      failonerror="true"
-      property="lunr.preview"
-      srcfile="${lunr.preview.json}"
-    />
-
     <!-- Clean up temporary files -->
     <delete failonerror="false" includeemptydirs="true">
       <fileset dir="${lunr.temp.dir}" includes="**/*" />
