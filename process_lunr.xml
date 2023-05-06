@@ -13,7 +13,7 @@
   <!--
     Setting up Lunr processing. Sets up ANT variables
   -->
-  <target name="lunr.init" if="lunr.search">
+  <target name="lunr.init">
 
     <property
       name="lunr.lib"
@@ -93,7 +93,6 @@
   -->
   <target
     name="lunr.copy.file"
-    if="lunr.search"
     description="Copy lunr-client file"
   >
     <copy
@@ -114,11 +113,6 @@
     />
     <replace
       file="${dita.output.dir}/js/lunr-client.js"
-      token="@@@lunr.search@@@"
-      value="${lunr.search}/"
-    />
-    <replace
-      file="${dita.output.dir}/js/lunr-client.js"
       token="@@@lunr.search.results@@@"
       value="${lunr.search.results}"
     />
@@ -134,7 +128,7 @@
   <!--
     Check if Node.js is installed.
   -->
-  <target name="lunr.node.check" if="lunr.search">
+  <target name="lunr.node.check">
     <!-- For Unix run node as an executable -->
 
     <exec
@@ -174,7 +168,7 @@
   <!--
     Creates placeholder texts for Search Results
   -->
-  <target name="lunr.placeholders" if="lunr.search">
+  <target name="lunr.placeholders">
     <tempfile
       property="lunr.search.results.file"
       deleteonexit="true"
@@ -235,7 +229,7 @@
   <!--
     Generates Lunr search index and preview JSON
   -->
-  <target name="lunr.search.index" if="lunr.search" depends="lunr.lang.support">
+  <target name="lunr.search.index" depends="lunr.lang.support">
       <property name="lunr.raw.json" value="${dita.temp.dir}/lunr.json" />
       <property name="lunr.temp.dir" value="${dita.temp.dir}/lunr" />
       <mkdir dir="${lunr.temp.dir}" />

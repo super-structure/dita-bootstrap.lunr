@@ -1,6 +1,6 @@
 const LUNR_DATA = @@@lunr.index@@@;
 const PREVIEW_LOOKUP = @@@lunr.preview@@@;
-const BASE_URL = '@@@lunr.search@@@';
+const BASE_URL = window.location.origin + '/';
 
 // Parse search results into HTML
 function parseLunrResults(results) {
