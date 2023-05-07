@@ -13,7 +13,7 @@ function jsonFetch(json, url) {
     fetch(BASE_URL + url)
       .then((response) => {
         if (!response.ok) {
-           reject(new Error(`HTTP error, status = ${response.status}`));
+          reject(new Error(`HTTP error, status = ${response.status}`));
         }
         return response.json();
       })
@@ -78,13 +78,13 @@ function closeSearch(el) {
 }
 
 function search(el) {
-  jsonFetch(LUNR_DATA, "search_index.json")
-    .then((data) => {
-      LUNR_DATA = data;
-      return jsonFetch(PREVIEW_LOOKUP, "preview.json");
-    })
-    .then((data) => {
-      PREVIEW_LOOKUP = data;
+  Promise.all([
+    jsonFetch(LUNR_DATA, "search_index.json"),
+    jsonFetch(PREVIEW_LOOKUP, "preview.json"),
+  ])
+    .then((values) => {
+      LUNR_DATA = values[0];
+      PREVIEW_LOOKUP = values[1];
       const query = document.getElementById("search-input").value;
       const idx = lunr.Index.load(LUNR_DATA);
       // Write results to page
@@ -106,6 +106,6 @@ function search(el) {
     })
     .catch((e) => {
       console.log(e);
-    })
+    });
   return false;
 }
