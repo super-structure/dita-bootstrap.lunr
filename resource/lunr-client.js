@@ -1,13 +1,24 @@
 let LUNR_DATA = null;
 let PREVIEW_LOOKUP = null;
-const BASE_URL = window.location.origin + "/";
+const scripts = document.getElementsByTagName("script");
+const scriptPath = scripts[scripts.length - 1].src;
+const BASE_URL = scriptPath.substr(0, scriptPath.lastIndexOf("/") + 1);
 
-function jsonFetch(url) {
+function jsonFetch(json, url) {
   return new Promise(function (resolve, reject) {
+    if (json) {
+      return resolve(json);
+    }
+
     fetch(BASE_URL + url)
-      .then((response) => response.json())
-      .then((result) => {
-        resolve(result);
+      .then((response) => {
+        if (!response.ok) {
+           reject(new Error(`HTTP error, status = ${response.status}`));
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return resolve(data);
       });
   });
 }
@@ -40,14 +51,14 @@ function parseLunrResults(results) {
 
 function formatResults(results) {
   return `<article role="article">
-		<div class="modal-header">
+    <div class="modal-header">
 	        <h1>@@@lunr.search.results@@@</h1>
-	        <button type="button" class="btn-close" aria-label="Close" onclick="closeSearch(this);"></button>
-	    </div>
-	    <div class="modal-body">
-		${parseLunrResults(results)}
-		</div>
-		</article>`;
+          <button type="button" class="btn-close" aria-label="Close" onclick="closeSearch(this);"></button>
+      </div>
+      <div class="modal-body">
+    ${parseLunrResults(results)}
+    </div>
+    </article>`;
 }
 
 function escapeHtml(unsafe) {
@@ -66,31 +77,35 @@ function closeSearch(el) {
   return false;
 }
 
-async function search(el) {
-  if (!LUNR_DATA) {
-    LUNR_DATA = await jsonFetch("js/search_index.json");
-  }
+function search(el) {
+  jsonFetch(LUNR_DATA, "search_index.json")
+    .then((data) => {
+      LUNR_DATA = data;
+      return jsonFetch(PREVIEW_LOOKUP, "preview.json");
+    })
+    .then((data) => {
+      PREVIEW_LOOKUP = data;
+      const query = document.getElementById("search-input").value;
+      const idx = lunr.Index.load(LUNR_DATA);
+      // Write results to page
+      const results = idx.search(query);
+      const elements = document.getElementsByClassName("bs-main");
 
-  if (!PREVIEW_LOOKUP) {
-    PREVIEW_LOOKUP = await jsonFetch("js/preview.json");
-  }
+      if (elements.length < 2) {
+        const resultHtml = `<main role="main" class="container bs-main">
+          ${formatResults(results)}</main>`;
 
-  const query = document.getElementById("search-input").value;
-  const idx = lunr.Index.load(LUNR_DATA);
-  // Write results to page
-  const results = idx.search(query);
-  const elements = document.getElementsByClassName("bs-main");
+        elements[0].insertAdjacentHTML("afterend", resultHtml);
+      } else {
+        elements[1].innerHTML = formatResults(results);
+      }
 
-  if (elements.length < 2) {
-    const resultHtml = `<main role="main" class="container bs-main">
-	    	${formatResults(results)}</main>`;
-
-    elements[0].insertAdjacentHTML("afterend", resultHtml);
-  } else {
-    elements[1].innerHTML = formatResults(results);
-  }
-
-  elements[0].classList.add("collapse");
-  window.scrollTo(0, 0);
+      elements[0].classList.add("collapse");
+      window.scrollTo(0, 0);
+      return false;
+    })
+    .catch((e) => {
+      console.log(e);
+    })
   return false;
 }
