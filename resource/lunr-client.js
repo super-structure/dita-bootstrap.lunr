@@ -2,18 +2,22 @@ let LUNR_DATA = null;
 let PREVIEW_LOOKUP = null;
 const scripts = document.getElementsByTagName("script");
 const scriptPath = scripts[scripts.length - 1].src;
-const BASE_URL = scriptPath.substr(0, scriptPath.lastIndexOf("/") + 1);
+const JSON_PATH = scriptPath.substr(0, scriptPath.lastIndexOf("/") + 1);
+const BASE_URL = scriptPath.substr(
+  0,
+  JSON_PATH.lastIndexOf("/", JSON_PATH.lastIndexOf("/") - 1) + 1
+);
 
-function jsonFetch(json, url) {
+function jsonFetch(json, filename) {
   return new Promise(function (resolve, reject) {
     if (json) {
       return resolve(json);
     }
 
-    fetch(BASE_URL + url)
+    fetch(JSON_PATH + filename)
       .then((response) => {
         if (!response.ok) {
-          reject(new Error(`HTTP error, status = ${response.status}`));
+          return reject(new Error(`HTTP error, status = ${response.status}`));
         }
         return response.json();
       })
