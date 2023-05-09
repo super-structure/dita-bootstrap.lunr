@@ -12,7 +12,8 @@
   <!-- HTML5 extension points -->   
   <feature extension="dita.xsl.html5" value="xsl/xhtml.xsl" type="file" />
 
-  <feature extension="depend.preprocess.post" value="lunr" />
+  <feature extension="depend.preprocess.copy-html.pre" value="lunr" />
+
   <!-- Internationalization of texts -->
   <feature extension="dita.xsl.strings" file="cfg/common/vars/strings.xml" />
   
