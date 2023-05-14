@@ -122,12 +122,24 @@
     <xsl:text>&gt;</xsl:text>
   </xsl:template>
 
-<xsl:template match="text()" mode="serialize">
-  <xsl:value-of
+  <xsl:template match="*[contains(@class, ' xmlelement')]" mode="serialize">
+    <xsl:text>&lt;</xsl:text>
+      <xsl:value-of select="name()" />
+      <xsl:if test="@class">
+        <xsl:text disable-output-escaping="yes"> class=&quot;</xsl:text>
+        <xsl:value-of select="@class" />
+        <xsl:text disable-output-escaping="yes">&quot;</xsl:text>
+      </xsl:if>
+      <xsl:text>&gt; &amp;lt;</xsl:text>
+        <xsl:apply-templates mode="serialize" />
+      <xsl:text>&amp;gt; &lt;/</xsl:text>
+      <xsl:value-of select="name()" />
+      <xsl:text>&gt;</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="text()" mode="serialize">
+    <xsl:value-of
       select="replace(replace(., '^\s*(.+?)\s*$', '$1'), '^ .*$', '')"
     />
-</xsl:template>
-
-
-
+  </xsl:template>
 </xsl:stylesheet>
