@@ -33,6 +33,25 @@
     </xsl:call-template>
   </xsl:variable>
 
+
+  <xsl:template name="openHtml">
+    <xsl:text>&lt;</xsl:text>
+    <xsl:value-of select="name()" />
+    <xsl:if test="@class">
+      <xsl:text disable-output-escaping="yes"> class=&quot;</xsl:text>
+      <xsl:value-of select="@class" />
+      <xsl:text disable-output-escaping="yes">&quot;</xsl:text>
+    </xsl:if>
+    <xsl:text>&gt; </xsl:text>
+  </xsl:template>
+
+
+  <xsl:template name="closeHtml">
+    <xsl:text> &lt;/</xsl:text>
+    <xsl:value-of select="name()" />
+    <xsl:text>&gt;</xsl:text>
+  </xsl:template>
+
   <xsl:template match="/">
     <topics>
       <xsl:apply-templates />
@@ -41,100 +60,80 @@
 
   <xsl:template match="/dita | *[contains(@class, ' topic/topic ')]">
 
-    <topic>
-      <xsl:variable name="TITLE">
-        <xsl:value-of
-          select="replace(*[contains(@class, ' topic/title ')],'&#xA;', ' ')"
-        />
-      </xsl:variable>
-      <xsl:variable name="KEYWORDS">
-        <xsl:for-each
-          select="descendant::*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/descendant-or-self::*"
-        >
-          <xsl:text> </xsl:text>
-          <xsl:value-of select="normalize-space(text()[1])" />
-        </xsl:for-each>
-      </xsl:variable>
+    <xsl:variable name="TITLE">
+      <xsl:value-of
+        select="replace(*[contains(@class, ' topic/title ')],'&#xA;', ' ')"
+      />
+    </xsl:variable>
+    <xsl:variable name="KEYWORDS">
+      <xsl:for-each
+        select="descendant::*[contains(@class,' topic/prolog ')]/*[contains(@class,' topic/metadata ')]/*[contains(@class,' topic/keywords ')]/descendant-or-self::*"
+      >
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="normalize-space(text()[1])" />
+      </xsl:for-each>
+    </xsl:variable>
 
-      <xsl:variable name="ABSTRACT">
-        <xsl:apply-templates
-          select="*[contains(@class, ' topic/abstract ')]"
-          mode="outofline"
-        />  
-        <!-- get the shortdesc para -->
-        <xsl:apply-templates
-          select="*[contains(@class, ' topic/shortdesc ')]"
-          mode="outofline"
-        />
-      </xsl:variable>
-      <xsl:variable name="TEXT">
-           <xsl:value-of
-          select="replace(*[contains(@class, ' topic/abstract ')],'&#xA;', ' ')"
-        />
-           <xsl:text> </xsl:text>
-           <xsl:value-of
-          select="replace(*[contains(@class, ' topic/shortdesc ')],'&#xA;', ' ')"
-        />
-           <xsl:text> </xsl:text>
-           <xsl:value-of
-          select="replace(*[contains(@class, ' topic/body ')],'&#xA;', ' ')"
-        />
-      </xsl:variable>
+    <xsl:variable name="ABSTRACT">
+      <xsl:apply-templates
+        select="*[contains(@class, ' topic/abstract ')]"
+        mode="outofline"
+      />
+      <!-- get the shortdesc para -->
+      <xsl:apply-templates
+        select="*[contains(@class, ' topic/shortdesc ')]"
+        mode="outofline"
+      />
+    </xsl:variable>
+    <xsl:variable name="TEXT">
+         <xsl:value-of
+        select="replace(*[contains(@class, ' topic/abstract ')],'&#xA;', ' ')"
+      />
+         <xsl:text> </xsl:text>
+         <xsl:value-of
+        select="replace(*[contains(@class, ' topic/shortdesc ')],'&#xA;', ' ')"
+      />
+         <xsl:text> </xsl:text>
+         <xsl:value-of
+        select="replace(*[contains(@class, ' topic/body ')],'&#xA;', ' ')"
+      />
+    </xsl:variable>
 
-      <xsl:variable name="nodestring">
-        <xsl:apply-templates select="$ABSTRACT" mode="serialize" />
-      </xsl:variable>
-      
+    <xsl:variable name="nodestring">
+      <xsl:apply-templates select="$ABSTRACT" mode="serialize" />
+    </xsl:variable>
 
-
+    <xsl:element name="topic">
       <xsl:attribute
         name="href"
         select="concat($RELATIVE_PATH, concat('#', dita-ot:generate-html-id(.)))"
       />
       <xsl:attribute name="title" select="$TITLE" />
       <xsl:attribute name="keywords" select="$KEYWORDS" />
-      <abstract>
+      <xsl:element name="abstract">
         <xsl:value-of select="replace($nodestring,'&#xA;', ' ')" />
-      </abstract>
-      <text>
+      </xsl:element>
+      <xsl:element name="text">
         <xsl:value-of
           select="replace(replace($TEXT , '^\s*(.+?)\s*$', '$1'), '^ .*$', '')"
         />
-      </text>
-    </topic>
+      </xsl:element>
+    </xsl:element>
     <xsl:apply-templates />
-
   </xsl:template>
 
-
   <xsl:template match="*" mode="serialize">
-  <xsl:text>&lt;</xsl:text>
-    <xsl:value-of select="name()" />
-    <xsl:if test="@class">
-      <xsl:text disable-output-escaping="yes"> class=&quot;</xsl:text>
-      <xsl:value-of select="@class" />
-      <xsl:text disable-output-escaping="yes">&quot;</xsl:text>
-    </xsl:if>
-    <xsl:text>&gt; </xsl:text>
-      <xsl:apply-templates mode="serialize" />
-    <xsl:text> &lt;/</xsl:text>
-    <xsl:value-of select="name()" />
-    <xsl:text>&gt;</xsl:text>
+    <xsl:call-template name="openHtml" />
+    <xsl:apply-templates mode="serialize" />
+    <xsl:call-template name="closeHtml" />
   </xsl:template>
 
   <xsl:template match="*[contains(@class, ' xmlelement')]" mode="serialize">
-    <xsl:text>&lt;</xsl:text>
-      <xsl:value-of select="name()" />
-      <xsl:if test="@class">
-        <xsl:text disable-output-escaping="yes"> class=&quot;</xsl:text>
-        <xsl:value-of select="@class" />
-        <xsl:text disable-output-escaping="yes">&quot;</xsl:text>
-      </xsl:if>
-      <xsl:text>&gt; &amp;lt;</xsl:text>
-        <xsl:apply-templates mode="serialize" />
-      <xsl:text>&amp;gt; &lt;/</xsl:text>
-      <xsl:value-of select="name()" />
-      <xsl:text>&gt;</xsl:text>
+    <xsl:call-template name="openHtml" />
+    <xsl:text>&amp;lt;</xsl:text>
+    <xsl:apply-templates mode="serialize" />
+    <xsl:text>&amp;gt;</xsl:text>
+    <xsl:call-template name="closeHtml" />
   </xsl:template>
 
   <xsl:template match="text()" mode="serialize">
