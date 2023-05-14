@@ -33,25 +33,6 @@
     </xsl:call-template>
   </xsl:variable>
 
-
-  <xsl:template name="openHtml">
-    <xsl:text>&lt;</xsl:text>
-    <xsl:value-of select="name()" />
-    <xsl:if test="@class">
-      <xsl:text disable-output-escaping="yes"> class=&quot;</xsl:text>
-      <xsl:value-of select="@class" />
-      <xsl:text disable-output-escaping="yes">&quot;</xsl:text>
-    </xsl:if>
-    <xsl:text>&gt; </xsl:text>
-  </xsl:template>
-
-
-  <xsl:template name="closeHtml">
-    <xsl:text> &lt;/</xsl:text>
-    <xsl:value-of select="name()" />
-    <xsl:text>&gt;</xsl:text>
-  </xsl:template>
-
   <xsl:template match="/">
     <topics>
       <xsl:apply-templates />
@@ -122,18 +103,35 @@
     <xsl:apply-templates />
   </xsl:template>
 
+  <xsl:template name="openTag">
+    <xsl:text>&lt;</xsl:text>
+    <xsl:value-of select="name()" />
+    <xsl:if test="@class">
+      <xsl:text disable-output-escaping="yes"> class=&quot;</xsl:text>
+      <xsl:value-of select="@class" />
+      <xsl:text disable-output-escaping="yes">&quot;</xsl:text>
+    </xsl:if>
+    <xsl:text>&gt; </xsl:text>
+  </xsl:template>
+
+  <xsl:template name="closeTag">
+    <xsl:text> &lt;/</xsl:text>
+    <xsl:value-of select="name()" />
+    <xsl:text>&gt;</xsl:text>
+  </xsl:template>
+
   <xsl:template match="*" mode="serialize">
-    <xsl:call-template name="openHtml" />
+    <xsl:call-template name="openTag" />
     <xsl:apply-templates mode="serialize" />
-    <xsl:call-template name="closeHtml" />
+    <xsl:call-template name="closeTag" />
   </xsl:template>
 
   <xsl:template match="*[contains(@class, ' xmlelement')]" mode="serialize">
-    <xsl:call-template name="openHtml" />
+    <xsl:call-template name="openTag" />
     <xsl:text>&amp;lt;</xsl:text>
     <xsl:apply-templates mode="serialize" />
     <xsl:text>&amp;gt;</xsl:text>
-    <xsl:call-template name="closeHtml" />
+    <xsl:call-template name="closeTag" />
   </xsl:template>
 
   <xsl:template match="text()" mode="serialize">
