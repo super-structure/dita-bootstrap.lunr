@@ -3,9 +3,22 @@
   This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
   See the accompanying LICENSE file for applicable licenses.
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+<xsl:stylesheet
+  exclude-result-prefixes="dita-ot"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dita-ot="http://dita-ot.sourceforge.net/ns/201007/dita-ot"
+  version="2.0"
+>
 
 	<xsl:output omit-xml-declaration="yes" indent="no" method="text" />
+
+  <xsl:function name="dita-ot:escapeQuote" as="xs:string">
+    <xsl:param name="input" />
+    <xsl:sequence
+      select="replace(replace($input, '\\', '\\\\'), '&quot;', '\\&quot;')"
+    />
+  </xsl:function>
 
 	<!--
 		Add standard tags based on the ditamap
@@ -28,27 +41,19 @@
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"t": "</xsl:text>
-		<xsl:value-of
-      select="replace(replace(@title, '\\', '\\\\'), '&quot;', '\\&quot;')"
-    />
+		<xsl:value-of select="dita-ot:escapeQuote(@title)" />
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"k": "</xsl:text>
-		<xsl:value-of
-      select="replace(replace(@keywords, '\\', '\\\\'), '&quot;', '\\&quot;')"
-    />
+		<xsl:value-of select="dita-ot:escapeQuote(@keywords)" />
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"d": "</xsl:text>
-		<xsl:value-of
-      select="replace(replace(replace(abstract, '\\', '\\\\'), '&quot;', '\\&quot;'), ' \s+', ' ')"
-    />
+		<xsl:value-of select="replace(dita-ot:escapeQuote(abstract), ' \s+', ' ')" />
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"b": "</xsl:text>
-		<xsl:value-of
-      select="replace(replace(replace(text, '\\', '\\\\'), '&quot;', '\\&quot;'), ' \s+', ' ')"
-    />
+		<xsl:value-of select="replace(dita-ot:escapeQuote(text), ' \s+', ' ')" />
 		<xsl:text>"</xsl:text>
 
 		<xsl:text>}</xsl:text>
