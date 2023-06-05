@@ -1,6 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-
   <div class="container">
+    <!-- This shows the menu on mobile -->
+    <div class="bd-navbar-toggle">
+      <button
+        class="navbar-toggler p-2"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#bdSidebar"
+        aria-controls="bdSidebar"
+        aria-label="Toggle docs navigation"
+      >
+        <i class="bi bi-list"/>
+      </button>
+    </div>
     <a class="navbar-brand" href="/">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +32,7 @@
       DITA Bootstrap
     </a>
     <button
-      class="navbar-toggler"
+      class="navbar-toggler py-2 px-2"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarSupportedContent"
@@ -28,7 +40,7 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span class="navbar-toggler-icon" />
+      <i class="bi bi-three-dots"/>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
@@ -41,47 +53,47 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Link Three</a>
         </li>
-      </ul>     
+      </ul>
       <ul class="navbar-nav ms-auto">
-      	<li class="nav-item d-flex align-items-center">
-	      <span class="nav-link py-2 pe-2"><i class="bi bi-search" /></span>
-	      <form
+        <li class="nav-item d-flex align-items-center">
+          <span class="nav-link py-2 pe-2"><i class="bi bi-search"/></span>
+          <form
             class="bd-search position-relative me-auto"
             onsubmit="return search(this);"
           >
-	     	<input
+          <input
               type="search"
               class="form-control ds-input"
               id="search-input"
-              placeholder="Search docs..."
-              aria-label="Search docs for..."
+              placeholder="Search…"
+              aria-label="Search for…"
               dir="auto"
               style="position: relative; vertical-align: top;"
             />
-	      </form>
-	  	</li>
-	  	 <!--
-        This is a dark/light color theme toggler
-        It requires JavaScript to function.
-      -->
+          </form>
+        </li>
+        <!--
+          This is a dark/light color theme toggler.
+          It requires JavaScript to function.
+        -->
         <li class="nav-item dropdown">
           <a
             href="#"
-            class="nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center show"
+            class="nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
             id="bd-theme"
             data-bs-toggle="dropdown"
             aria-expanded="false"
             data-bs-display="static"
           >
             <span class="bs-toggler-light">
-              <i class="bi bi-brightness-high-fill" />
+              <i class="bi bi-brightness-high-fill"/>
             </span>
-            <span class="bs-toggler-dark"><i
-                class="bi bi-moon-stars-fill"
-              /></span>
-            <span class="bs-toggler-auto"><i class="bi bi-circle-half" />
-          </span>
-
+            <span class="bs-toggler-dark">
+              <i class="bi bi-moon-stars-fill"/>
+            </span>
+            <span class="bs-toggler-auto">
+              <i class="bi bi-circle-half"/>
+            </span>
             <span class="d-lg-none ms-2">Toggle theme</span>
           </a>
           <ul
@@ -96,8 +108,8 @@
                 class="dropdown-item d-flex align-items-center"
                 data-bs-theme-value="light"
               >
-                <i class="bi bi-brightness-high-fill" />
-                <span class="ms-2"> Light </span>
+                <i class="bi bi-brightness-high-fill"/>
+                <span class="ms-2">Light</span>
               </button>
             </li>
             <li>
@@ -106,8 +118,8 @@
                 class="dropdown-item d-flex align-items-center"
                 data-bs-theme-value="dark"
               >
-                <i class="bi bi-moon-stars-fill" />
-                <span class="ms-2"> Dark </span>
+                <i class="bi bi-moon-stars-fill"/>
+                <span class="ms-2">Dark</span>
               </button>
             </li>
             <li>
@@ -116,8 +128,8 @@
                 class="dropdown-item d-flex align-items-center"
                 data-bs-theme-value="auto"
               >
-                <i class="bi bi-circle-half" />
-                <span class="ms-2"> Auto </span>
+                <i class="bi bi-circle-half"/>
+                <span class="ms-2">Auto</span>
               </button>
             </li>
           </ul>
