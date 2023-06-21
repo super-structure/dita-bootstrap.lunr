@@ -5,12 +5,13 @@
   See the accompanying LICENSE file for applicable licenses.
 -->
 <plugin id="net.infotexture.dita-bootstrap.lunr" version="1.0.0">
-  <require plugin="net.infotexture.dita-bootstrap"/>
+  <require plugin="net.infotexture.dita-bootstrap" />
   <feature extension="ant.import" file="process_lunr.xml" />
   <!-- Ensure the plugin's error and logging messages are available -->
   <feature extension="dita.xsl.messages" file="resource/messages.xml" />
   <!-- HTML5 extension points -->   
   <feature extension="dita.xsl.html5" value="xsl/xhtml.xsl" type="file" />
+  <feature extension="depend.preprocess.pre" value="lunr.init" />
   <feature extension="depend.preprocess.copy-html.pre" value="lunr" />
   <!-- Internationalization of texts -->
   <feature extension="dita.xsl.strings" file="cfg/common/vars/strings.xml" />

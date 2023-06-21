@@ -13,20 +13,40 @@
   <!--
     Setting up Lunr processing. Sets up ANT variables
   -->
-  <target name="lunr.init">
+  <target name="lunr.init" description="Setting up Lunr processing">
 
     <property
       name="lunr.lib"
       value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr.js"
     />
 
-    <condition property="lunr.support.include">
-      <matches
-        string="${default.language}"
-        pattern="((ar|da|de|es|fi|fr|hi|hu|it|ja|jp|ko|nl|no|pt|ro|ru|sv|ta|th|tr|vi|zh)(\-|$))"
+    <condition property="is.Bootstrap">
+      <contains
+        string="${transtype}"
+        substring="bootstrap"
+        casesensitive="no"
       />
     </condition>
 
+    <condition property="lunr.support.include">
+      <and>
+        <matches
+          string="${default.language}"
+          pattern="((ar|da|de|es|fi|fr|hi|hu|it|ja|jp|ko|nl|no|pt|ro|ru|sv|ta|th|tr|vi|zh)(\-|$))"
+        />
+        <istrue value="${is.Bootstrap}" />
+      </and>
+    </condition>
+  </target>
+
+  <!--
+    Creates a JavaScript file for generating the lunr index
+  -->
+  <target
+    name="lunr.node.script.copy"
+    if="is.Bootstrap"
+    description="Copy over a baseline node.js file for search index generation"
+  >
     <tempfile
       property="lunr.node.script.file"
       deleteonexit="true"
@@ -39,14 +59,16 @@
       overwrite="true"
     />
     <property name="lunr.node.script" location="${lunr.node.script.file}" />
-
-
   </target>
 
   <!--
     Overrides the default English language lunr.js index creation.
   -->
-  <target name="lunr.lang.support" if="lunr.support.include">
+  <target
+    name="lunr.lang.support"
+    if="lunr.support.include"
+    description="Override the default English language index creation"
+  >
     <property
       name="lunr.stemmer.js"
       location="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/languages/lunr.stemmer.support.js"
@@ -91,7 +113,11 @@
   <!--
     Copies the Lunr-client.js file to the final destination
   -->
-  <target name="lunr.copy.file" description="Copy lunr-client file">
+  <target
+    if="is.Bootstrap"
+    name="lunr.scripts.copy"
+    description="Copy client files to target"
+  >
     <copy
       file="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr-client.js"
       toFile="${dita.output.dir}/js/lunr-client.js"
@@ -128,7 +154,12 @@
   <!--
     Check if Node.js is installed.
   -->
-  <target name="lunr.node.check">
+  <target
+    name="lunr.node.check"
+    if="is.Bootstrap"
+    unless="node.installed"
+    description="Ensure Node.js is available"
+  >
     <!-- For Unix run node as an executable -->
 
     <exec
@@ -168,7 +199,11 @@
   <!--
     Creates placeholder texts for Search Results
   -->
-  <target name="lunr.placeholders">
+  <target
+    name="lunr.placeholders"
+    if="is.Bootstrap"
+    description="Read localized texts for Search and No Results"
+  >
     <tempfile
       property="lunr.search.results.file"
       deleteonexit="true"
@@ -229,7 +264,12 @@
   <!--
     Generates Lunr search index and preview JSON
   -->
-  <target name="lunr.search.index" depends="lunr.lang.support">
+  <target
+    description="Generate Lunr search index and preview JSON"
+    name="lunr.search.index"
+    if="is.Bootstrap"
+    depends="lunr.node.script.copy, lunr.lang.support"
+  >
       <property name="lunr.raw.json" value="${dita.temp.dir}/lunr.json" />
       <property name="lunr.temp.dir" value="${dita.temp.dir}/lunr" />
       <mkdir dir="${lunr.temp.dir}" />
@@ -356,7 +396,10 @@
   </target>
 
   <target
+    description="Generate Lunr client files and search index"
     name="lunr"
-    depends="lunr.init, lunr.node.check, lunr.placeholders, lunr.search.index, lunr.copy.file"
+    depends="lunr.node.check, lunr.placeholders, lunr.search.index, lunr.scripts.copy"
   />
+
+
 </project>
