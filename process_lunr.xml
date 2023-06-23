@@ -20,14 +20,7 @@
       value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr.js"
     />
 
-    <condition property="is.Bootstrap">
-      <contains
-        string="${transtype}"
-        substring="bootstrap"
-        casesensitive="no"
-      />
-    </condition>
-
+    <property name="is.Bootstrap" value="true" />
     <condition property="lunr.support.include">
       <and>
         <matches
