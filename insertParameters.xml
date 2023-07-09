@@ -1,0 +1,7 @@
+<dummy xmlns:if="ant:if" xmlns:unless="ant:unless">
+  <param
+    name="OFFLINE_MODE"
+    expression="${offline.mode}"
+    if:set="offline.mode"
+  />
+</dummy>

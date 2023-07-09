@@ -15,4 +15,12 @@
   <feature extension="depend.preprocess.copy-html.pre" value="lunr" />
   <!-- Internationalization of texts -->
   <feature extension="dita.xsl.strings" file="cfg/common/vars/strings.xml" />
+  <feature extension="dita.conductor.html5.param" file="insertParameters.xml" />
+
+  <transtype name="html5-bootstrap" extends="html5">
+    <param name="offline.mode" type="enum">
+      <val>yes</val>
+      <val default="true">no</val>
+    </param>
+  </transtype>
 </plugin>

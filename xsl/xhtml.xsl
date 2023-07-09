@@ -12,8 +12,10 @@
   exclude-result-prefixes="xs dita-ot"
 >
 
+  <xsl:param name="LUNR" select="'lunr.js'" />
   <xsl:param name="LUNR_CLIENT" select="'lunr-client.js'" />
   <xsl:param name="JS_PATH" select="'js/'" />
+  <xsl:param name="OFFLINE_MODE" select="'no'" />
 
 	<xsl:template match="/ | @* | node()" mode="processHDF">
 
@@ -30,7 +32,14 @@
     </xsl:variable>
 
     <script src="{$relpath}/{$JS_PATH}{$LUNR_CLIENT}" />
-    <script src="https://unpkg.com/lunr/lunr.js" />
+    <xsl:choose>
+      <xsl:when test="OFFLINE_MODE='yes'">
+        <script src="{$relpath}/{$JS_PATH}{$LUNR}" />
+      </xsl:when>
+      <xsl:otherwise>
+        <script src="https://unpkg.com/lunr/lunr.js" />
+      </xsl:otherwise>
+    </xsl:choose>
 
 
     <xsl:next-match />  

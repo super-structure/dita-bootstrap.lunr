@@ -30,6 +30,81 @@
         <istrue value="${is.Bootstrap}" />
       </and>
     </condition>
+
+    <condition property="offline.mode.yes">
+      <equals arg1="${offline.mode}" arg2="yes" />
+    </condition>
+
+    <!--
+      Copy Index JSON and Preview JSON to output
+    -->
+    <macrodef name="online-lunr">
+      <sequential>
+        <replace
+          file="${dita.output.dir}/js/lunr-client.js"
+          token="@@@@@lunr.index@@@@@"
+          value="null"
+        />
+        <replace
+          file="${dita.output.dir}/js/lunr-client.js"
+          token="@@@@@lunr.preview@@@@@"
+          value="null"
+        />
+
+        <move
+          file="${lunr.index.json}"
+          toFile="${dita.output.dir}/js/search_index.json"
+          overwrite="true"
+        />
+        <move
+          file="${lunr.preview.json}"
+          toFile="${dita.output.dir}/js/preview.json"
+          overwrite="true"
+        />
+        <chmod file="${dita.output.dir}/js/search_index.json" perm="755" />
+        <chmod file="${dita.output.dir}/js/preview.json" perm="755" />
+      </sequential>
+    </macrodef>
+
+    <!--
+      Embed Index JSON and Preview JSON within lunr-client.js
+      Add a local copy of lunr.js
+    -->
+    <macrodef name="offline-lunr">
+      <sequential>
+
+        <loadfile
+          failonerror="true"
+          property="lunr.index.placeholder"
+          srcfile="${lunr.index.json}"
+        />
+        <loadfile
+          failonerror="true"
+          property="lunr.preview.placeholder"
+          srcfile="${lunr.preview.json}"
+        />
+
+        <replace
+          file="${dita.output.dir}/js/lunr-client.js"
+          token="@@@@@lunr.index@@@@@"
+          value="${lunr.index.placeholder}"
+        />
+
+        <replace
+          file="${dita.output.dir}/js/lunr-client.js"
+          token="@@@@@lunr.preview@@@@@"
+          value="${lunr.preview.placeholder}"
+        />
+
+        <copy
+          file="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr.js"
+          toFile="${dita.output.dir}/js/lunr.js"
+          overwrite="true"
+        />
+        <chmod file="${dita.output.dir}/js/lunr.js" perm="755" />
+
+      </sequential>
+    </macrodef>
   </target>
 
   <!--
@@ -128,20 +203,10 @@
       value="${lunr.no.search.results}"
     />
 
-    <move
-      file="${lunr.index.json}"
-      toFile="${dita.output.dir}/js/search_index.json"
-      overwrite="true"
-    />
-    <move
-      file="${lunr.preview.json}"
-      toFile="${dita.output.dir}/js/preview.json"
-      overwrite="true"
-    />
+    <online-lunr unless:set="offline.mode.yes" />
+    <offline-lunr if:set="offline.mode.yes" />
 
     <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755" />
-    <chmod file="${dita.output.dir}/js/search_index.json" perm="755" />
-    <chmod file="${dita.output.dir}/js/preview.json" perm="755" />
   </target>
 
   <!--
