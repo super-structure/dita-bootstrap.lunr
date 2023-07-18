@@ -21,7 +21,7 @@
     />
 
     <property name="is.Bootstrap" value="true" />
-    <condition property="lunr.support.include">
+    <condition property="lunr.support.include" value="yes">
       <and>
         <matches
           string="${default.language}"
@@ -103,6 +103,25 @@
         />
         <chmod file="${dita.output.dir}/js/lunr.js" perm="755" />
 
+      </sequential>
+    </macrodef>
+    <!--
+      Local copy of stemmer and stop words.
+    -->
+    <macrodef name="lunr-stemmer">
+      <sequential>
+        <copy
+          file="${lunr.stemmer.js}"
+          toFile="${dita.output.dir}/js/lunr.stemmer.support.js"
+          overwrite="true"
+        />
+        <copy
+          file="${lunr.lang.js}"
+          toFile="${dita.output.dir}/js/lunr.${lunr.lang}.js"
+          overwrite="true"
+        />
+        <chmod file="${dita.output.dir}/js/lunr.stemmer.support.js" perm="755" />
+        <chmod file="${dita.output.dir}/js/lunr.${lunr.lang}.js" perm="755" />
       </sequential>
     </macrodef>
   </target>
@@ -205,6 +224,7 @@
 
     <online-lunr unless:set="offline.mode.yes" />
     <offline-lunr if:set="offline.mode.yes" />
+    <lunr-stemmer if:set="lunr.support.include" />
 
     <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755" />
   </target>

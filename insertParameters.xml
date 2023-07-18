@@ -4,4 +4,11 @@
     expression="${offline.mode}"
     if:set="offline.mode"
   />
+  <param
+    name="LUNR_LANG_SUPPORT"
+    expression="${lunr.support.include}"
+    if:set="lunr.support.include"
+  />
+
+
 </dummy>
