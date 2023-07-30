@@ -62,6 +62,54 @@ PATH_TO_DITA_OT/bin/dita -f html5-bootstrap -o out -i PATH_TO_DITAMAP \
 
 A sample header file with a search box is provided with the plug-in: [includes/bs-navbar-lunr.hdr.xml](./includes/bs-navbar-lunr.hdr.xml).
 
+#### Adding Lunr Search to a GitHub Action
+
+You can use the standard [dita-ot-action](https://github.com/dita-ot/dita-ot-action) to run with Lunr Search. Since the transform
+requires Node.js to function, it is necessary to install it as part of the `install`
+process. Also, when creating documents in languages other than English, please ensure that
+the appropriate `locale` has been set prior to running the transform to ensure that
+the search index is generated correctly.
+
+```yaml
+name: Create DITA with Lunr Search (DE)
+permissions:
+  contents: write
+
+'on':
+  workflow_dispatch: null
+
+jobs:
+  build-dita:
+    name: Build DITA
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+      - name: Build HTML5 + Bootstrap
+        uses: dita-ot/dita-ot-action@4.0.2
+        with:
+          install: |
+            apt-get update -q
+            export DEBIAN_FRONTEND=noninteractive
+            apt-get install -qy --no-install-recommends nodejs
+            nodejs -v
+            locale-gen de_DE.UTF-8
+            LANG="de_DE.UTF-8"
+            LANGUAGE="de_DE:de"
+            LC_ALL="de_DE.UTF-8"
+          plugins: |
+            fox.jason.extend.css
+            dita-bootstrap
+            dita-bootstrap.lunr
+          project: .github/dita-ot/html.xml
+      - name: "Deploy GT-Overview to GitHub Pages"
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: out
+```
+
 ## License
 
 [Apache 2.0](LICENSE) © 2023 Jason Fox
