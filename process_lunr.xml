@@ -401,6 +401,7 @@
         <xmlcatalog refid="dita.catalog" />
         <param expression="${lunr.temp.dir}/" name="in" />
         <param expression="xml" name="extension" />
+        <param name="otversion" expression="${otversion}" />
         <factory name="net.sf.saxon.TransformerFactoryImpl" />
       </xslt>
 
