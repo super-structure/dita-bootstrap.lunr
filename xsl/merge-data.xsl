@@ -64,13 +64,13 @@
     <xsl:element name="topics">
       <xsl:for-each select="collection($path)">
         <!-- xsl:copy-of copies nodes and all their descendants -->
-        <xsl:if test="not(starts-with('$otversion', '4.1'))">
+        <xsl:if test="not(starts-with($otversion, '4.1'))">
           <xsl:apply-templates
             select="document(document-uri(.))/topics/node()"
             mode="data-output"
           />
         </xsl:if>
-        <xsl:if test="starts-with('$otversion', '4.1')">
+        <xsl:if test="starts-with($otversion, '4.1')">
           <xsl:apply-templates
             select="./topics/node()"
             mode="data-output"
