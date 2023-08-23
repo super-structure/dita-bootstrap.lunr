@@ -67,10 +67,10 @@
           select="document(document-uri(.))/topics/node()"
           mode="data-output"
         />
-				<xsl:apply-templates
+				<!--xsl:apply-templates
           select="./topics/node()"
           mode="data-output"
-        />
+        /-->
 			</xsl:for-each>
 		</xsl:element>
 	</xsl:template>
