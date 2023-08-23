@@ -63,6 +63,10 @@
 		<xsl:element name="topics">
 			<xsl:for-each select="collection($path)">
 				<!-- xsl:copy-of copies nodes and all their descendants -->
+        <xsl:apply-templates
+          select="document(document-uri(.))/topics/node()"
+          mode="data-output"
+        />
 				<xsl:apply-templates
           select="./topics/node()"
           mode="data-output"
