@@ -29,7 +29,6 @@ function jsonFetch(json, filename) {
 
 // Parse search results into HTML
 function parseLunrResults(results) {
-  const currentPage = (window.location.pathname.substring(1));
   const html = [];
   for (let i = 0; i < results.length; i++) {
     const id = results[i]["ref"];
@@ -37,7 +36,7 @@ function parseLunrResults(results) {
     const title = item["t"];
     const preview = item["d"];
     const link = item["l"];
-    const result = `<div class="card mb-3" ${link.includes(currentPage) ? 'onclick="closeSearch(this);"' : ''}>
+    const result = `<div class="card mb-3" onclick="closeSearch(this);">
       <a class="link stretched-link link-underline link-underline-opacity-0" href="${BASE_URL + link}">
           <h2 class="h3 title card-header text-body-emphasis">${title}</h5>
       </a>
