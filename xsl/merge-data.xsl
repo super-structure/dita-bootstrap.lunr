@@ -5,7 +5,7 @@
 -->
 <xsl:stylesheet
   exclude-result-prefixes="xs"
-  version="2.0"
+  version="3.0"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -23,7 +23,6 @@
   <xsl:param name="in">.</xsl:param>
   <xsl:param name="extension">.xml</xsl:param>
   <xsl:param name="out">lunr.xml</xsl:param>
-  <xsl:param name="otversion">4.1.1</xsl:param>
   <!--
     XSLT engine only accept file path that start with 'file:/'
 
@@ -62,27 +61,15 @@
   -->
   <xsl:template name="generate-data">
     <xsl:element name="topics">
-      <xsl:for-each select="collection($path)">
-        <!-- xsl:copy-of copies nodes and all their descendants -->
-        <xsl:if test="not(starts-with($otversion, '4.1'))">
-          <xsl:apply-templates
-            select="document(document-uri(.))/topics/node()"
-            mode="data-output"
-          />
-        </xsl:if>
-        <xsl:if test="starts-with($otversion, '4.1')">
-          <xsl:apply-templates
-            select="./topics/node()"
-            mode="data-output"
-          />
-        </xsl:if>
-      </xsl:for-each>
+      <!-- copies nodes and all their descendants -->
+      <xsl:merge>
+        <xsl:merge-source for-each-item="collection($path)" select="topics/topic">
+            <xsl:merge-key select="@id" order="ascending"/>
+        </xsl:merge-source>
+        <xsl:merge-action>
+            <xsl:sequence select="current-merge-group()"/>
+        </xsl:merge-action>
+      </xsl:merge>
     </xsl:element>
-  </xsl:template>
-
-  <xsl:template match="node()|@*" mode="data-output">
-     <xsl:copy>
-            <xsl:apply-templates select="node()|@*" mode="data-output" />
-        </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>
