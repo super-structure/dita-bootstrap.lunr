@@ -102,7 +102,7 @@ jobs:
             dita-bootstrap
             dita-bootstrap.lunr
           project: .github/dita-ot/html.xml
-      - name: "Deploy GT-Overview to GitHub Pages"
+      - name: "Deploy Documentation to GitHub Pages"
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
