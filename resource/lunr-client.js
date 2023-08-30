@@ -1,5 +1,5 @@
-let LUNR_DATA = null;
-let PREVIEW_LOOKUP = null;
+let LUNR_DATA = @@@lunr.index@@@;
+let PREVIEW_LOOKUP = @@@lunr.preview@@@;
 const scripts = document.getElementsByTagName("script");
 const scriptPath = scripts[scripts.length - 1].src;
 const JSON_PATH = scriptPath.substr(0, scriptPath.lastIndexOf("/") + 1);
