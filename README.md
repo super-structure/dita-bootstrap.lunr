@@ -11,6 +11,8 @@ _DITA Bootstrap Lunr Search_ is a [DITA Open Toolkit plug-in](https://www.dita-o
   - [Installing the Plug-in](#installing-the-plug-in)
   - [Installing Node.js](#installing-nodejs)
 - [Usage](#usage)
+  - [Adding Lunr Search to HTML Bootstrap output](#adding-lunr-search-to-html-bootstrap-output)
+  - [Adding Lunr Search to a GitHub Action](#adding-lunr-search-to-a-github-action)
   - [Parameter Reference](#parameter-reference)
 - [License](#license)
 
@@ -51,7 +53,7 @@ To download and install a copy, follow the instructions for your operating syste
 
 ## Usage
 
-#### Adding Lunr Search to HTML Bootstrap output
+### Adding Lunr Search to HTML Bootstrap output
 
 To run, use the `html5-bootstrap` transformation and add the `args.hdr` parameter.
 
@@ -62,13 +64,9 @@ PATH_TO_DITA_OT/bin/dita -f html5-bootstrap -o out -i PATH_TO_DITAMAP \
 
 A sample header file with a search box is provided with the plug-in: [includes/bs-navbar-lunr.hdr.xml](./includes/bs-navbar-lunr.hdr.xml).
 
-#### Adding Lunr Search to a GitHub Action
+### Adding Lunr Search to a GitHub Action
 
-You can use the standard [dita-ot-action](https://github.com/dita-ot/dita-ot-action) to run with Lunr Search. Since the transform
-requires Node.js to function, it is necessary to install it as part of the `install`
-process. Also, when creating documents in languages other than English, please ensure that
-the appropriate `locale` has been set prior to running the transform to ensure that
-the search index is generated correctly.
+You can use the standard [dita-ot-action](https://github.com/dita-ot/dita-ot-action) to run with Lunr Search. Since the transform requires Node.js to function, it is necessary to install it as part of the `install` process. Also, when creating documents in languages other than English, please ensure that the appropriate `locale` has been set prior to running the transform to ensure that the search index is generated correctly.
 
 ```yaml
 name: Create DITA with Lunr Search (DE)
