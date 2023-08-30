@@ -110,6 +110,10 @@ jobs:
           folder: out
 ```
 
+### Parameter Reference
+
+- `offline.mode` - enables Lunr search to work in conjunction with DITA Bootstrap [offline mode](https://infotexture.github.io/dita-bootstrap/offline.html) - this requires an additional plugin to be installed.
+
 ## License
 
 [Apache 2.0](LICENSE) © 2023 Jason Fox
