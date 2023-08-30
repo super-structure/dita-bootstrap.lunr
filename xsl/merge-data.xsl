@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <!--
   This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
   See the accompanying LICENSE file for applicable licenses.
@@ -13,13 +13,7 @@
 >
 
   <!-- Defining that this .xsl generates an indented, UTF8-encoded XML file -->
-  <xsl:output
-    encoding="utf-8"
-    indent="yes"
-    method="xml"
-    omit-xml-declaration="no"
-    standalone="yes"
-  />
+  <xsl:output encoding="utf-8" indent="yes" method="xml" omit-xml-declaration="no" standalone="yes"/>
   <xsl:param name="in">.</xsl:param>
   <xsl:param name="extension">.xml</xsl:param>
   <xsl:param name="out">lunr.xml</xsl:param>
@@ -50,10 +44,10 @@
     </xsl:choose>
   </xsl:variable>
   <!-- Copies defined xmlns above for this xsl into a variable -->
-  <xsl:variable name="namespaces" select="document('')/*/namespace::*" />
+  <xsl:variable name="namespaces" select="document('')/*/namespace::*"/>
   <!-- Template to once execute generate-svrl template -->
   <xsl:template match="/">
-    <xsl:call-template name="generate-data" />
+    <xsl:call-template name="generate-data"/>
   </xsl:template>
   <!--
     Template that generates the single lunr file by copying contents

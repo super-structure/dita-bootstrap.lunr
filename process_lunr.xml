@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--ant-->
 <!--
   This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
@@ -20,19 +20,19 @@
       value="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/lunr.js"
     />
 
-    <property name="is.Bootstrap" value="true" />
+    <property name="is.Bootstrap" value="true"/>
     <condition property="lunr.support.include" value="yes">
       <and>
         <matches
           string="${default.language}"
           pattern="((ar|da|de|es|fi|fr|hi|hu|it|ja|jp|ko|nl|no|pt|ro|ru|sv|ta|th|tr|vi|zh)(\-|$))"
         />
-        <istrue value="${is.Bootstrap}" />
+        <istrue value="${is.Bootstrap}"/>
       </and>
     </condition>
 
     <condition property="offline.mode.yes">
-      <equals arg1="${offline.mode}" arg2="yes" />
+      <equals arg1="${offline.mode}" arg2="yes"/>
     </condition>
 
     <!--
@@ -61,8 +61,8 @@
           toFile="${dita.output.dir}/js/preview.json"
           overwrite="true"
         />
-        <chmod file="${dita.output.dir}/js/search_index.json" perm="755" />
-        <chmod file="${dita.output.dir}/js/preview.json" perm="755" />
+        <chmod file="${dita.output.dir}/js/search_index.json" perm="755"/>
+        <chmod file="${dita.output.dir}/js/preview.json" perm="755"/>
       </sequential>
     </macrodef>
 
@@ -101,7 +101,7 @@
           toFile="${dita.output.dir}/js/lunr.js"
           overwrite="true"
         />
-        <chmod file="${dita.output.dir}/js/lunr.js" perm="755" />
+        <chmod file="${dita.output.dir}/js/lunr.js" perm="755"/>
 
       </sequential>
     </macrodef>
@@ -120,8 +120,8 @@
           toFile="${dita.output.dir}/js/lunr.${lunr.lang}.js"
           overwrite="true"
         />
-        <chmod file="${dita.output.dir}/js/lunr.stemmer.support.js" perm="755" />
-        <chmod file="${dita.output.dir}/js/lunr.${lunr.lang}.js" perm="755" />
+        <chmod file="${dita.output.dir}/js/lunr.stemmer.support.js" perm="755"/>
+        <chmod file="${dita.output.dir}/js/lunr.${lunr.lang}.js" perm="755"/>
       </sequential>
     </macrodef>
   </target>
@@ -145,7 +145,7 @@
       toFile="${lunr.node.script.file}"
       overwrite="true"
     />
-    <property name="lunr.node.script" location="${lunr.node.script.file}" />
+    <property name="lunr.node.script" location="${lunr.node.script.file}"/>
   </target>
 
   <!--
@@ -161,10 +161,10 @@
       location="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/languages/lunr.stemmer.support.js"
     />
     <loadresource property="lunr.lang">
-      <string value="${default.language}" />
+      <string value="${default.language}"/>
       <filterchain>
         <tokenfilter>
-          <replaceregex pattern="(\w\w)-(\w\w)" replace="\1" />
+          <replaceregex pattern="(\w\w)-(\w\w)" replace="\1"/>
         </tokenfilter>
       </filterchain>
     </loadresource>
@@ -222,11 +222,11 @@
       value="${lunr.no.search.results}"
     />
 
-    <online-lunr unless:set="offline.mode.yes" />
-    <offline-lunr if:set="offline.mode.yes" />
-    <lunr-stemmer if:set="lunr.support.include" />
+    <online-lunr unless:set="offline.mode.yes"/>
+    <offline-lunr if:set="offline.mode.yes"/>
+    <lunr-stemmer if:set="lunr.support.include"/>
 
-    <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755" />
+    <chmod file="${dita.output.dir}/js/lunr-client.js" perm="755"/>
   </target>
 
   <!--
@@ -250,7 +250,7 @@
       failonerror="false"
       failifexecutionfails="false"
     >
-      <arg line="-v" />
+      <arg line="-v"/>
     </exec>
     <!-- For Windows run from a DOS command -->
     <exec
@@ -263,15 +263,15 @@
       failonerror="false"
       failifexecutionfails="false"
     >
-      <arg value="/C" />
-      <arg value="node -v" />
+      <arg value="/C"/>
+      <arg value="node -v"/>
     </exec>
 
     <condition property="node.installed">
-      <equals arg1="${node.result}" arg2="0" />
+      <equals arg1="${node.result}" arg2="0"/>
     </condition>
 
-    <dita-ot-fail unless:set="node.installed" id="LUNR001F" />
+    <dita-ot-fail unless:set="node.installed" id="LUNR001F"/>
   </target>
 
   <!--
@@ -302,7 +302,7 @@
         in="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/dummy.xml"
         out="${lunr.search.results.file}"
       >
-        <param name="text" expression="Search Results" />
+        <param name="text" expression="Search Results"/>
         <param
           name="defaultLanguage"
           expression="${default.language}"
@@ -318,7 +318,7 @@
         in="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/resource/dummy.xml"
         out="${lunr.no.search.results.file}"
       >
-        <param name="text" expression="No Search Results" />
+        <param name="text" expression="No Search Results"/>
         <param
           name="defaultLanguage"
           expression="${default.language}"
@@ -348,9 +348,9 @@
     if="is.Bootstrap"
     depends="lunr.node.script.copy, lunr.lang.support"
   >
-      <property name="lunr.raw.json" value="${dita.temp.dir}/lunr.json" />
-      <property name="lunr.temp.dir" value="${dita.temp.dir}/lunr" />
-      <mkdir dir="${lunr.temp.dir}" />
+      <property name="lunr.raw.json" value="${dita.temp.dir}/lunr.json"/>
+      <property name="lunr.temp.dir" value="${dita.temp.dir}/lunr"/>
+      <mkdir dir="${lunr.temp.dir}"/>
 
       <tempfile
       deleteonexit="true"
@@ -383,11 +383,11 @@
         filedirparameter="FILEDIR"
         parallel="${parallel}"
       >
-        <ditafileset format="dita" processingRole="normal" />
-        <param name="BASEDIR" expression="${dita.dir}" />
-        <param name="OUTPUTDIR" expression="${dita.output.dir}" />
-        <param name="OUTEXT" expression="${out.ext}" if:set="out.ext" />
-        <param name="defaultLanguage" expression="${default.language}" />
+        <ditafileset format="dita" processingRole="normal"/>
+        <param name="BASEDIR" expression="${dita.dir}"/>
+        <param name="OUTPUTDIR" expression="${dita.output.dir}"/>
+        <param name="OUTEXT" expression="${out.ext}" if:set="out.ext"/>
+        <param name="defaultLanguage" expression="${default.language}"/>
       </xslt>
       </pipeline>
 
@@ -398,10 +398,10 @@
       out="${lunr.raw.xml}"
       style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/merge-data.xsl"
     >
-        <xmlcatalog refid="dita.catalog" />
-        <param expression="${lunr.temp.dir}/" name="in" />
-        <param expression="xml" name="extension" />
-        <factory name="net.sf.saxon.TransformerFactoryImpl" />
+        <xmlcatalog refid="dita.catalog"/>
+        <param expression="${lunr.temp.dir}/" name="in"/>
+        <param expression="xml" name="extension"/>
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
 
       <xslt
@@ -418,8 +418,8 @@
       style="${dita.plugin.net.infotexture.dita-bootstrap.lunr.dir}/xsl/data-to-preview.xsl"
     />
 
-    <property name="lunr.raw.json.file" location="${lunr.raw.json}" />
-    <property name="lunr.index.json.file" location="${lunr.index.json}" />
+    <property name="lunr.raw.json.file" location="${lunr.raw.json}"/>
+    <property name="lunr.index.json.file" location="${lunr.index.json}"/>
     <!-- For Unix run node as an executable -->
     <exec
       executable="node"
@@ -430,10 +430,10 @@
       errorproperty="lunr.node.error"
     >
 
-      <arg line="${lunr.node.script}" />
-      <arg line="${lunr.lib}" />
-      <arg line="${lunr.raw.json.file}" />
-      <arg line="${lunr.index.json.file}" />
+      <arg line="${lunr.node.script}"/>
+      <arg line="${lunr.lib}"/>
+      <arg line="${lunr.raw.json.file}"/>
+      <arg line="${lunr.index.json.file}"/>
     </exec>
     <!-- For Windows run from a DOS command -->
     <exec
@@ -444,7 +444,7 @@
       resultproperty="lunr.node.result"
       errorproperty="lunr.node.error"
     >
-      <arg value="/C" />
+      <arg value="/C"/>
       <arg
         value="node  &quot;${lunr.node.script}&quot; &quot;${lunr.lib}&quot; &quot;${lunr.raw.json.file}&quot; &quot;${lunr.index.json.file}&quot;"
       />
@@ -452,7 +452,7 @@
 
     <condition property="lunr.isError">
         <not>
-            <equals arg1="${lunr.node.result}" arg2="0" />
+            <equals arg1="${lunr.node.result}" arg2="0"/>
         </not>
     </condition>
 
@@ -469,7 +469,7 @@
     />
     <!-- Clean up temporary files -->
     <delete failonerror="false" includeemptydirs="true">
-      <fileset dir="${lunr.temp.dir}" includes="**/*" />
+      <fileset dir="${lunr.temp.dir}" includes="**/*"/>
     </delete> 
   </target>
 

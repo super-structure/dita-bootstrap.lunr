@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
   See the accompanying LICENSE file for applicable licenses.
@@ -11,13 +11,11 @@
   version="2.0"
 >
 
-	<xsl:output omit-xml-declaration="yes" indent="no" method="text" />
+	<xsl:output omit-xml-declaration="yes" indent="no" method="text"/>
 
   <xsl:function name="dita-ot:escapeQuote" as="xs:string">
-    <xsl:param name="input" />
-    <xsl:sequence
-      select="replace(replace($input, '\\', '\\\\'), '&quot;', '\\&quot;')"
-    />
+    <xsl:param name="input"/>
+    <xsl:sequence select="replace(replace($input, '\\', '\\\\'), '&quot;', '\\&quot;')"/>
   </xsl:function>
 
 	<!--
@@ -25,7 +23,7 @@
 	-->
 	<xsl:template match="/">
 		<xsl:text>[</xsl:text>
-		<xsl:apply-templates select="//topic" />
+		<xsl:apply-templates select="//topic"/>
 		<xsl:text>]</xsl:text>		
 	</xsl:template>
 
@@ -33,27 +31,27 @@
 		<xsl:text>{</xsl:text>
 
 		<xsl:text>"id": "</xsl:text>
-		<xsl:value-of select="generate-id(.)" />
+		<xsl:value-of select="generate-id(.)"/>
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"link": "</xsl:text>
-		<xsl:value-of select="@href" />
+		<xsl:value-of select="@href"/>
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"t": "</xsl:text>
-		<xsl:value-of select="dita-ot:escapeQuote(@title)" />
+		<xsl:value-of select="dita-ot:escapeQuote(@title)"/>
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"k": "</xsl:text>
-		<xsl:value-of select="dita-ot:escapeQuote(@keywords)" />
+		<xsl:value-of select="dita-ot:escapeQuote(@keywords)"/>
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"d": "</xsl:text>
-		<xsl:value-of select="replace(dita-ot:escapeQuote(abstract), ' \s+', ' ')" />
+		<xsl:value-of select="replace(dita-ot:escapeQuote(abstract), ' \s+', ' ')"/>
 		<xsl:text>",</xsl:text>
 
 		<xsl:text>"b": "</xsl:text>
-		<xsl:value-of select="replace(dita-ot:escapeQuote(text), ' \s+', ' ')" />
+		<xsl:value-of select="replace(dita-ot:escapeQuote(text), ' \s+', ' ')"/>
 		<xsl:text>"</xsl:text>
 
 		<xsl:text>}</xsl:text>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
   See the accompanying LICENSE file for applicable licenses.
@@ -11,14 +11,14 @@
   version="2.0"
   exclude-result-prefixes="xs xhtml dita-ot"
 >
-  <xsl:output omit-xml-declaration="yes" indent="no" method="text" />
-  <xsl:import href="plugin:org.dita.base:xsl/common/output-message.xsl" />
-  <xsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl" />
+  <xsl:output omit-xml-declaration="yes" indent="no" method="text"/>
+  <xsl:import href="plugin:org.dita.base:xsl/common/output-message.xsl"/>
+  <xsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl"/>
   <xsl:param name="text">Search Result</xsl:param>
 
   <xsl:template match="/">
     <xsl:call-template name="getVariable">
-      <xsl:with-param name="id" select="$text" />
+      <xsl:with-param name="id" select="$text"/>
     </xsl:call-template>
   </xsl:template>
 
