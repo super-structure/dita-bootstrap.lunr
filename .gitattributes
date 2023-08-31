@@ -1,4 +1,4 @@
+resource/languages/** linguist-vendored
 resource/lunr.js linguist-vendored
-test/** linguist-vendored
 
 process_lunr.xml linguist-language=Ant-Build-System

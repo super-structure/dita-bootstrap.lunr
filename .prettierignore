@@ -1,7 +1,8 @@
 # This file specifies files that Prettier should not format
 
-# Skip vendored Lunr JavaScript
+# Skip vendored JavaScript
 resource/lunr.js
+resource/languages/
 
 # Skip files that throw errors:
 # SyntaxError: Unexpected token
