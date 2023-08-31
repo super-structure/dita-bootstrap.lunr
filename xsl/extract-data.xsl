@@ -18,7 +18,7 @@
   <xsl:param name="OUTEXT" select="'.html'"/>
 
   <xsl:param name="PATH2PROJ">
-  <xsl:apply-templates select="/processing-instruction('path2project-uri')[1]" mode="get-path2project"/>
+    <xsl:apply-templates select="/processing-instruction('path2project-uri')[1]" mode="get-path2project"/>
   </xsl:param>
 
   <xsl:variable name="RELATIVE_PATH">
@@ -37,7 +37,6 @@
   </xsl:template>
 
   <xsl:template match="/dita | *[contains(@class, ' topic/topic ')]">
-
     <xsl:variable name="TITLE">
       <xsl:value-of select="replace(*[contains(@class, ' topic/title ')],'&#xA;', ' ')"/>
     </xsl:variable>
@@ -56,11 +55,11 @@
       <xsl:apply-templates select="*[contains(@class, ' topic/shortdesc ')]" mode="outofline"/>
     </xsl:variable>
     <xsl:variable name="TEXT">
-         <xsl:value-of select="replace(*[contains(@class, ' topic/abstract ')],'&#xA;', ' ')"/>
-         <xsl:text> </xsl:text>
-         <xsl:value-of select="replace(*[contains(@class, ' topic/shortdesc ')],'&#xA;', ' ')"/>
-         <xsl:text> </xsl:text>
-         <xsl:value-of select="replace(*[contains(@class, ' topic/body ')],'&#xA;', ' ')"/>
+      <xsl:value-of select="replace(*[contains(@class, ' topic/abstract ')],'&#xA;', ' ')"/>
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="replace(*[contains(@class, ' topic/shortdesc ')],'&#xA;', ' ')"/>
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="replace(*[contains(@class, ' topic/body ')],'&#xA;', ' ')"/>
     </xsl:variable>
 
     <xsl:variable name="nodestring">

@@ -56,12 +56,14 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item d-flex align-items-center">
-          <span class="nav-link pe-2"><i class="bi bi-search"/></span>
+          <span class="nav-link pe-2">
+            <i class="bi bi-search"/>
+          </span>
           <form
             class="bd-search position-relative me-auto"
             onsubmit="return search(this);"
           >
-          <input
+            <input
               type="search"
               class="form-control ds-input"
               id="search-input"

@@ -9,6 +9,4 @@
     expression="${lunr.support.include}"
     if:set="lunr.support.include"
   />
-
-
 </dummy>

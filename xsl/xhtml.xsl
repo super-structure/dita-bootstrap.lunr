@@ -11,15 +11,12 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   exclude-result-prefixes="xs dita-ot"
 >
-
   <xsl:param name="defaultLanguage" select="'en'" as="xs:string"/>
   <xsl:param name="OFFLINE_MODE" select="'no'"/>
   <xsl:param name="LUNR_LANG_SUPPORT" select="'no'"/>
   <xsl:variable name="LANGUAGE_CODE" select="substring($defaultLanguage, 1, 2)"/>
 
-	<xsl:template match="/ | @* | node()" mode="processHDF">
-
-
+  <xsl:template match="/ | @* | node()" mode="processHDF">
     <xsl:variable name="relpath">
       <xsl:choose>
         <xsl:when test="$FILEDIR='.'">
@@ -41,15 +38,14 @@
       </xsl:otherwise>
     </xsl:choose>
 
-
     <xsl:message>
       <xsl:value-of select="$LUNR_LANG_SUPPORT"/>
     </xsl:message>
     <xsl:if test="$LUNR_LANG_SUPPORT='yes'">
-        <script src="{$relpath}/js/lunr.stemmer.support.js"/>
-        <script src="{$relpath}/js/lunr.{$LANGUAGE_CODE}.js"/>
+      <script src="{$relpath}/js/lunr.stemmer.support.js"/>
+      <script src="{$relpath}/js/lunr.{$LANGUAGE_CODE}.js"/>
     </xsl:if>
 
-    <xsl:next-match/>  
+    <xsl:next-match/>
   </xsl:template>
 </xsl:stylesheet>

@@ -11,7 +11,6 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
-
   <!-- Defining that this .xsl generates an indented, UTF8-encoded XML file -->
   <xsl:output encoding="utf-8" indent="yes" method="xml" omit-xml-declaration="no" standalone="yes"/>
   <xsl:param name="in">.</xsl:param>
@@ -21,7 +20,7 @@
     XSLT engine only accept file path that start with 'file:/'
 
     In the code below we ensure that $in parameter that hold input path to
-    where the lunr/*.xml files  which have to be merge into single lunr file
+    where the lunr/*.xml files which have to be merge into single lunr file
     is in a format
   -->
   <xsl:variable name="path">
@@ -58,10 +57,10 @@
       <!-- copies nodes and all their descendants -->
       <xsl:merge>
         <xsl:merge-source for-each-item="collection($path)" select="topics/topic">
-            <xsl:merge-key select="@id" order="ascending"/>
+          <xsl:merge-key select="@id" order="ascending"/>
         </xsl:merge-source>
         <xsl:merge-action>
-            <xsl:sequence select="current-merge-group()"/>
+          <xsl:sequence select="current-merge-group()"/>
         </xsl:merge-action>
       </xsl:merge>
     </xsl:element>
