@@ -95,9 +95,7 @@
         <xsl:value-of select="replace($nodestring,'&#xA;', ' ')" />
       </xsl:element>
       <xsl:element name="text">
-        <xsl:value-of
-          select="replace(replace($TEXT , '^\s*(.+?)\s*$', '$1'), '^ .*$', '')"
-        />
+        <xsl:value-of select="normalize-space($TEXT)"/>
       </xsl:element>
     </xsl:element>
     <xsl:apply-templates />

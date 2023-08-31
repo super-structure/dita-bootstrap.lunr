@@ -1,5 +1,5 @@
-let LUNR_DATA = null;
-let PREVIEW_LOOKUP = null;
+let LUNR_DATA = @@@lunr.index@@@;
+let PREVIEW_LOOKUP = @@@lunr.preview@@@;
 const scripts = document.getElementsByTagName("script");
 const scriptPath = scripts[scripts.length - 1].src;
 const JSON_PATH = scriptPath.substr(0, scriptPath.lastIndexOf("/") + 1);
@@ -36,7 +36,7 @@ function parseLunrResults(results) {
     const title = item["t"];
     const preview = item["d"];
     const link = item["l"];
-    const result = `<div class="card mb-3">
+    const result = `<div class="card mb-3" onclick="closeSearch(this);">
       <a class="link stretched-link link-underline link-underline-opacity-0" href="${BASE_URL + link}">
           <h2 class="h3 title card-header text-body-emphasis">${title}</h5>
       </a>
