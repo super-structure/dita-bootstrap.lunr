@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <!--
   This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
   See the accompanying LICENSE file for applicable licenses.
@@ -11,15 +11,8 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
-
   <!-- Defining that this .xsl generates an indented, UTF8-encoded XML file -->
-  <xsl:output
-    encoding="utf-8"
-    indent="yes"
-    method="xml"
-    omit-xml-declaration="no"
-    standalone="yes"
-  />
+  <xsl:output encoding="utf-8" indent="yes" method="xml" omit-xml-declaration="no" standalone="yes"/>
   <xsl:param name="in">.</xsl:param>
   <xsl:param name="extension">.xml</xsl:param>
   <xsl:param name="out">lunr.xml</xsl:param>
@@ -27,7 +20,7 @@
     XSLT engine only accept file path that start with 'file:/'
 
     In the code below we ensure that $in parameter that hold input path to
-    where the lunr/*.xml files  which have to be merge into single lunr file
+    where the lunr/*.xml files which have to be merge into single lunr file
     is in a format
   -->
   <xsl:variable name="path">
@@ -50,10 +43,10 @@
     </xsl:choose>
   </xsl:variable>
   <!-- Copies defined xmlns above for this xsl into a variable -->
-  <xsl:variable name="namespaces" select="document('')/*/namespace::*" />
+  <xsl:variable name="namespaces" select="document('')/*/namespace::*"/>
   <!-- Template to once execute generate-svrl template -->
   <xsl:template match="/">
-    <xsl:call-template name="generate-data" />
+    <xsl:call-template name="generate-data"/>
   </xsl:template>
   <!--
     Template that generates the single lunr file by copying contents
@@ -64,10 +57,10 @@
       <!-- copies nodes and all their descendants -->
       <xsl:merge>
         <xsl:merge-source for-each-item="collection($path)" select="topics/topic">
-            <xsl:merge-key select="@id" order="ascending"/>
+          <xsl:merge-key select="@id" order="ascending"/>
         </xsl:merge-source>
         <xsl:merge-action>
-            <xsl:sequence select="current-merge-group()"/>
+          <xsl:sequence select="current-merge-group()"/>
         </xsl:merge-action>
       </xsl:merge>
     </xsl:element>

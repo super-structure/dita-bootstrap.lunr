@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
   See the accompanying LICENSE file for applicable licenses.
@@ -6,7 +6,5 @@
 <?xml-model href="strings.rnc" type="application/relax-ng-compact-syntax"?>
 <variables>
   <variable id="Search Results">Zoekresultaten</variable>
-  <variable
-    id="No Search Results"
-  >Uw zoekopdracht heeft geen resultaten opgeleverd</variable>
+  <variable id="No Search Results">Uw zoekopdracht heeft geen resultaten opgeleverd</variable>
 </variables>
