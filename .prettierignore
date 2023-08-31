@@ -1,4 +1,4 @@
 # This file specifies files that Prettier should not format
 
 # Skip Lunr JavaScript files
-resource/**/*.js
+resource/lunr.js
