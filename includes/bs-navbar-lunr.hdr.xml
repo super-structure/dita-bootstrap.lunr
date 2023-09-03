@@ -56,11 +56,12 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item d-flex align-items-center">
+        <!--simple search box -->
           <span class="nav-link pe-2">
             <i class="bi bi-search"/>
           </span>
-          <form class="position-relative me-auto search-box">
-          <input
+          <form class="position-relative me-auto search-box rounded">
+            <input
               type="search"
               class="form-control"
               placeholder="Search…"
@@ -68,6 +69,21 @@
               dir="auto"
             />
           </form>
+          <!--Elaborate search box -->
+          <!--form class="position-relative me-auto search-box">
+            <div class="input-group">
+              <span class="input-group-text bg-primary-subtle">
+                <i class="bi bi-search"/>
+              </span>
+              <input
+                  type="search"
+                  class="form-control form-floating"
+                  placeholder="Search…"
+                  aria-label="Search for…"
+                  dir="auto"
+                />
+            </div>
+            </form-->
         </li>
         <!--
           This is a dark/light color theme toggler.

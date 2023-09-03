@@ -121,12 +121,7 @@
     for(let i = 0; i < elements.length; i++) {
       elements[i].addEventListener("submit", (e) =>{
         e.preventDefault();
-        const children = e.target.children;
-        for(let j = 0; j < children.length; j++) {
-          if (children[j].type = 'search'){
-            search(children[j].value);
-          }
-        }
+        search(e.target.querySelectorAll('*[type="search"]')[0].value);
         return false;
       },false);
     }
