@@ -62,7 +62,18 @@ PATH_TO_DITA_OT/bin/dita -f html5-bootstrap -o out -i PATH_TO_DITAMAP \
   --args.hdr=path/to/your-header.xml
 ```
 
-A sample header file with a search box is provided with the plug-in: [includes/bs-navbar-lunr.hdr.xml](./includes/bs-navbar-lunr.hdr.xml).
+A sample header file with a search box is provided with the plug-in: [includes/bs-navbar-lunr.hdr.xml](./includes/bs-navbar-lunr.hdr.xml) - the core markup can be seen below.
+
+```xml
+<li class="nav-item d-flex align-items-center">
+  <span class="nav-link pe-2">
+    <i class="bi bi-search"/>
+  </span>
+  <form class="search-box position-relative me-auto">
+    <input type="search" class="form-control" placeholder="Search…" aria-label="Search for…" dir="auto"/>
+  </form>
+</li>
+```
 
 ### Adding Lunr Search to a GitHub Action
 
