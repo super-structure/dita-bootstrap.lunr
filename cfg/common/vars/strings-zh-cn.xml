@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This file is part of the DITA Bootstrap Lunr Search plug-in for DITA Open Toolkit.
+  See the accompanying LICENSE file for applicable licenses.
+-->
+<?xml-model href="strings.rnc" type="application/relax-ng-compact-syntax"?>
+<variables>
+  <variable id="Search Results">搜索结果</variable>
+  <variable id="No Search Results">您的搜索未返回任何结果</variable>
+</variables>

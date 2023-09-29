@@ -1,0 +1,12 @@
+<dummy xmlns:if="ant:if" xmlns:unless="ant:unless">
+  <param
+    name="OFFLINE_MODE"
+    expression="${offline.mode}"
+    if:set="offline.mode"
+  />
+  <param
+    name="LUNR_LANG_SUPPORT"
+    expression="${lunr.support.include}"
+    if:set="lunr.support.include"
+  />
+</dummy>

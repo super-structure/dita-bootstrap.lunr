@@ -1,3 +1,4 @@
-test/** linguist-vendored
+resource/languages/** linguist-vendored
+resource/lunr.js linguist-vendored
 
-process_tabs.xml linguist-language=Ant-Build-System
+process_lunr.xml linguist-language=Ant-Build-System
