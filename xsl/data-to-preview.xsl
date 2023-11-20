@@ -28,7 +28,7 @@
     <xsl:text>": {</xsl:text>
 
     <xsl:text>"l": "</xsl:text>
-    <xsl:value-of select="@href"/>
+    <xsl:value-of select="replace(@href, '\\', '/' )"/>
     <xsl:text>",</xsl:text>
 
     <xsl:text>"t": "</xsl:text>
