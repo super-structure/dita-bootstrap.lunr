@@ -11,7 +11,7 @@
     "check": "npm run prettier-check",
     "fmt": "npm run format",
     "format": "prettier --write \"**/*\" --ignore-unknown",
-    "lint-staged": "lint-staged",
+    "lint-staged": "lint-staged --no-stash",
     "prepare": "husky install",
     "prettier": "prettier --write \"**/*\" --ignore-unknown",
     "prettier-check": "prettier --check \"**/*\" --ignore-unknown",
