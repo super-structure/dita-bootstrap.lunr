@@ -23,7 +23,7 @@
       <and>
         <matches
           string="${default.language}"
-          pattern="((ar|da|de|es|fi|fr|he|hi|hu|it|ja|jp|ko|nl|no|pt|ro|ru|sv|ta|th|tr|vi|zh)(\-|$))"
+          pattern="((ar|da|de|el|es|fi|fr|he|hi|hu|it|ja|jp|ko|nl|no|pt|ro|ru|sv|ta|th|tr|vi|zh)(\-|$))"
         />
         <istrue value="${is.Bootstrap}"/>
       </and>
