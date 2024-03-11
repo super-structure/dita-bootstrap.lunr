@@ -58,11 +58,9 @@
 
   function formatResults(results) {
     return `<article role="article">
-        <div class="modal-header">
-  	        <h1 class="float-start w-100">@@@lunr.search.results@@@</h1>
-            <div class="float-end">
-              <button type="button" class="btn-close search-close" aria-label="Close"></button>
-            </div>
+        <div class="modal-header justify-content-between">
+            <h1>@@@lunr.search.results@@@</h1>
+            <button type="button" class="btn-close search-close" aria-label="Close"/>
         </div>
         <div class="modal-body">
       ${parseLunrResults(results)}
