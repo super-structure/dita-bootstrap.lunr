@@ -38,7 +38,7 @@
     <xsl:text>",</xsl:text>
 
     <xsl:text>"t": "</xsl:text>
-    <xsl:value-of select="dita-ot:escapeQuote(@title)"/>
+    <xsl:value-of select="replace(dita-ot:escapeQuote(@title), '\s+', ' ')"/>
     <xsl:text>",</xsl:text>
 
     <xsl:text>"k": "</xsl:text>
