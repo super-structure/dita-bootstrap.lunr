@@ -38,7 +38,7 @@
     <xsl:text>",</xsl:text>
 
     <xsl:text>"t": "</xsl:text>
-    <xsl:value-of select="dita-ot:escapeQuote(@title)"/>
+    <xsl:value-of select="normalize-space(dita-ot:escapeQuote(@title))"/>
     <xsl:text>",</xsl:text>
 
     <xsl:text>"k": "</xsl:text>

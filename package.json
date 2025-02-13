@@ -11,21 +11,15 @@
     "check": "npm run prettier-check",
     "fmt": "npm run format",
     "format": "prettier --write \"**/*\" --ignore-unknown",
-    "lint-staged": "lint-staged --no-stash",
-    "prepare": "husky",
     "prettier": "prettier --write \"**/*\" --ignore-unknown",
     "prettier-check": "prettier --check \"**/*\" --ignore-unknown",
     "test": "prettier --list-different \"**/*\" --ignore-unknown"
   },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
-  },
   "devDependencies": {
-    "@prettier/plugin-xml": "3.2.2",
-    "husky": "^9.0.10",
-    "lint-staged": "15.2.1",
+    "@prettier/plugin-xml": "3.4.1",
+    "lefthook": "^1.10.10",
     "lunr": "^2.3.9",
     "lunr-languages": "^1.14.0",
-    "prettier": "3.2.5"
+    "prettier": "3.4.2"
   }
 }

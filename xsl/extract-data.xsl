@@ -38,7 +38,7 @@
 
   <xsl:template match="/dita | *[contains(@class, ' topic/topic ')]">
     <xsl:variable name="TITLE">
-      <xsl:value-of select="replace(*[contains(@class, ' topic/title ')],'&#xA;', ' ')"/>
+      <xsl:value-of select="normalize-space(replace(*[contains(@class, ' topic/title ')],'&#xA;', ' '))"/>
     </xsl:variable>
     <xsl:variable name="KEYWORDS">
       <xsl:for-each
