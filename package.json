@@ -20,6 +20,6 @@
     "lefthook": "^1.11.2",
     "lunr": "^2.3.9",
     "lunr-languages": "^1.14.0",
-    "prettier": "3.4.2"
+    "prettier": "3.5.3"
   }
 }
