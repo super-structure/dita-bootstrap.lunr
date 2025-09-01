@@ -16,7 +16,7 @@
     "test": "prettier --list-different \"**/*\" --ignore-unknown"
   },
   "devDependencies": {
-    "@prettier/plugin-xml": "3.4.1",
+    "@prettier/plugin-xml": "3.4.2",
     "lefthook": "^1.12.3",
     "lunr": "^2.3.9",
     "lunr-languages": "^1.14.0",
