@@ -1,0 +1,10 @@
+# Manage Git hooks with Lefthook
+# https://evilmartians.com/chronicles/lefthook-knock-your-teams-code-back-into-shape
+# https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+pre-commit:
+  parallel: true
+  commands:
+    prettier:
+      run: prettier --write {staged_files} --ignore-unknown
+      stage_fixed: true

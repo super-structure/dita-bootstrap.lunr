@@ -5,6 +5,6 @@
 -->
 <?xml-model href="strings.rnc" type="application/relax-ng-compact-syntax"?>
 <variables>
-  <variable id="Search Results">Resultados de la búsquedas</variable>
+  <variable id="Search Results">Resultados de la búsqueda</variable>
   <variable id="No Search Results">La búsqueda no arrojó resultados</variable>
 </variables>

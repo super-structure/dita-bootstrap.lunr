@@ -125,7 +125,7 @@ jobs:
 
 ## License
 
-[Apache 2.0](LICENSE) © 2023 Jason Fox
+[Apache 2.0](LICENSE) © 2023-2026 Jason Fox
 
 The Program includes the following additional software components which were obtained under license:
 

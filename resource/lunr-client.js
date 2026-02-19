@@ -111,7 +111,6 @@
         const closeBox = document.getElementsByClassName("search-close");
         for(let i = 0; i < closeBox.length; i++) {
            closeBox[i].addEventListener("click", closeSearch);
-           return false;
         }
         return false;
       })
