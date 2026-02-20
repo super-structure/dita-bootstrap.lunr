@@ -74,23 +74,27 @@
           failonerror="true"
           property="lunr.index.placeholder"
           srcfile="${lunr.index.json}"
+          encoding="UTF-8"
         />
         <loadfile
           failonerror="true"
           property="lunr.preview.placeholder"
           srcfile="${lunr.preview.json}"
+          encoding="UTF-8"
         />
 
         <replace
           file="${dita.output.dir}/js/lunr-client.js"
           token="@@@@@lunr.index@@@@@"
           value="${lunr.index.placeholder}"
+          encoding="UTF-8"
         />
 
         <replace
           file="${dita.output.dir}/js/lunr-client.js"
           token="@@@@@lunr.preview@@@@@"
           value="${lunr.preview.placeholder}"
+          encoding="UTF-8"
         />
 
         <copy
